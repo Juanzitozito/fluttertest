@@ -105,13 +105,17 @@ class MyHomePage extends StatelessWidget {
                           borderRadius: BorderRadius.all(Radius.circular(15))),
                       child: Text(
                         e.categoria,
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                       ),
                     )
                   ],
                 ),
               );
             }).toList(),
+          ),
+          FloatingActionButton(
+            onPressed: () {},
+            child: Icon(Icons.add),
           )
         ],
       ),
