@@ -1,14 +1,14 @@
 class Lancamento {
   int? id;
-  DateTime? emissao;
+  DateTime emissao;
   double valor;
   String observacao;
-  String? categoria;
+  String categoria;
 
   Lancamento(
       {this.id,
-      this.emissao,
+      required this.emissao,
       required this.valor,
       required this.observacao,
-      this.categoria});
+      required this.categoria});
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertest/entity/categoria.dart';
 import 'package:fluttertest/entity/lancamento.dart';
+import 'package:intl/intl.dart';
 
 void main(List<String> args) {
   return runApp(MyApp());
@@ -90,11 +91,23 @@ class MyHomePage extends StatelessWidget {
                           style: const TextStyle(
                               fontSize: 19, fontWeight: FontWeight.w600),
                         ),
-                        Text(e.emissao.toString(),
+                        Text(
+                            DateFormat('dd/MM/yyyy hh:mm:ss').format(e.emissao),
                             style: const TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w400))
                       ],
                     ),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      margin: EdgeInsets.only(left: 20),
+                      decoration: const BoxDecoration(
+                          color: Color.fromARGB(255, 31, 133, 217),
+                          borderRadius: BorderRadius.all(Radius.circular(15))),
+                      child: Text(
+                        e.categoria,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    )
                   ],
                 ),
               );
