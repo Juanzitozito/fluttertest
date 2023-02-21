@@ -5,9 +5,14 @@ import 'package:fluttertest/entity/categoria.dart';
 import 'package:fluttertest/entity/lancamento.dart';
 import 'package:fluttertest/widgets/lista_lancamento.dart';
 import 'package:fluttertest/widgets/new_lancamento.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
 
-void main(List<String> args) {
+void main(List<String> args) async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Hive.initFlutter();
+
   return runApp(MyApp());
 }
 
@@ -30,7 +35,28 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Categoria> _listaCategorias = [
     Categoria(id: 1, nome: 'automóveis'),
     Categoria(id: 2, nome: 'jogos'),
-    Categoria(id: 3, nome: 'cosméticos')
+    Categoria(id: 3, nome: 'cosméticos'),
+    Categoria(id: 1, nome: 'automóveis'),
+    Categoria(id: 2, nome: 'jogos'),
+    Categoria(id: 3, nome: 'cosméticos'),
+    Categoria(id: 1, nome: 'automóveis'),
+    Categoria(id: 2, nome: 'jogos'),
+    Categoria(id: 3, nome: 'cosméticos'),
+    Categoria(id: 1, nome: 'automóveis'),
+    Categoria(id: 2, nome: 'jogos'),
+    Categoria(id: 3, nome: 'cosméticos'),
+    Categoria(id: 1, nome: 'automóveis'),
+    Categoria(id: 2, nome: 'jogos'),
+    Categoria(id: 3, nome: 'cosméticos'),
+    Categoria(id: 1, nome: 'automóveis'),
+    Categoria(id: 2, nome: 'jogos'),
+    Categoria(id: 3, nome: 'cosméticos'),
+    Categoria(id: 1, nome: 'automóveis'),
+    Categoria(id: 2, nome: 'jogos'),
+    Categoria(id: 3, nome: 'cosméticos'),
+    Categoria(id: 1, nome: 'automóveis'),
+    Categoria(id: 2, nome: 'jogos'),
+    Categoria(id: 3, nome: 'cosméticos'),
   ];
 
   final List<Lancamento> _listaLancamentos = [
@@ -47,6 +73,8 @@ class _MyHomePageState extends State<MyHomePage> {
         observacao: 'brief explanation',
         categoria: 'automóveis')
   ];
+
+  double totalizador = 0;
 
   void _addNewLancamento(String observacao, double valor, String categoria) {
     final newLanc = Lancamento(
@@ -75,28 +103,36 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text('My expenses app'),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            color: Colors.black38,
-            width: double.infinity,
-            child: (Card(
-              child: Row(
-                children: _listaCategorias.map((e) {
-                  return Column(
-                    children: [Text(e.nome)],
-                  );
-                }).toList(),
+      body: SingleChildScrollView(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Row(
+            children: [
+              Container(
+                color: Colors.black38,
+                width: MediaQuery.of(context).size.width * 0.5,
+                height: MediaQuery.of(context).size.height * 0.4,
+                child: (Card(
+                    child: SingleChildScrollView(
+                  padding: EdgeInsets.only(left: 5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: _listaCategorias.map((e) {
+                      return Text(e.nome);
+                    }).toList(),
+                  ),
+                ))),
               ),
-            )),
+              Text('data')
+            ],
           ),
           ListaLancamentos(_listaLancamentos),
-          FloatingActionButton(
-            onPressed: () => _startAddLancamento(context),
-            child: const Icon(Icons.add),
-          )
-        ],
+        ]),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color.fromARGB(255, 13, 83, 140),
+        hoverColor: const Color.fromARGB(255, 5, 59, 103),
+        onPressed: () => _startAddLancamento(context),
+        child: const Icon(Icons.add),
       ),
     );
   }

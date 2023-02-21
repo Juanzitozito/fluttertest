@@ -1,3 +1,4 @@
+import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -7,6 +8,7 @@ class NewLancamento extends StatelessWidget {
   final observacaoController = TextEditingController();
   final valorController = TextEditingController();
   final categoriaController = TextEditingController();
+  final emissaoController = TextEditingController();
 
   NewLancamento(this.addInput, {super.key});
 
@@ -32,6 +34,11 @@ class NewLancamento extends StatelessWidget {
                   const InputDecoration(labelText: 'Categoria do Produto'),
               controller: categoriaController,
             ),
+            DateTimeField(
+                onDateSelected: (date) {
+                  print(date);
+                },
+                selectedDate: DateTime.now()),
             ElevatedButton(
                 onPressed: () {
                   addInput(

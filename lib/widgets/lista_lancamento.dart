@@ -42,14 +42,14 @@ class ListaLancamentos extends StatelessWidget {
                       style: const TextStyle(
                           fontSize: 19, fontWeight: FontWeight.w600),
                     ),
-                    Text(DateFormat('dd/MM/yyyy hh:mm:ss').format(e.emissao),
+                    Text('${DateFormat('dd/MM/yyyy H').format(e.emissao)}h',
                         style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w400))
                   ],
                 ),
                 Container(
                   padding: const EdgeInsets.all(8),
-                  margin: EdgeInsets.only(left: 20),
+                  margin: EdgeInsets.only(left: 10),
                   decoration: const BoxDecoration(
                       color: Color.fromARGB(255, 31, 133, 217),
                       borderRadius: BorderRadius.all(Radius.circular(15))),
