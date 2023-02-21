@@ -1,6 +1,10 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertest/entity/categoria.dart';
 import 'package:fluttertest/entity/lancamento.dart';
+import 'package:fluttertest/widgets/lista_lancamento.dart';
+import 'package:fluttertest/widgets/new_lancamento.dart';
 import 'package:intl/intl.dart';
 
 void main(List<String> args) {
@@ -17,7 +21,12 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   final List<Categoria> _listaCategorias = [
     Categoria(id: 1, nome: 'automóveis'),
     Categoria(id: 2, nome: 'jogos'),
@@ -38,6 +47,27 @@ class MyHomePage extends StatelessWidget {
         observacao: 'brief explanation',
         categoria: 'automóveis')
   ];
+
+  void _addNewLancamento(String observacao, double valor, String categoria) {
+    final newLanc = Lancamento(
+        emissao: DateTime.now(),
+        valor: valor,
+        observacao: observacao,
+        categoria: categoria,
+        id: UniqueKey().hashCode);
+
+    setState(() {
+      _listaLancamentos.add(newLanc);
+    });
+  }
+
+  void _startAddLancamento(BuildContext ctx) {
+    showModalBottomSheet(
+        context: ctx,
+        builder: (_) {
+          return NewLancamento(_addNewLancamento);
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,61 +91,10 @@ class MyHomePage extends StatelessWidget {
               ),
             )),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: _listaLancamentos.map((e) {
-              return Card(
-                elevation: 7.0,
-                child: Row(
-                  children: [
-                    Container(
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(20)),
-                            border: Border.all(
-                              color: Colors.blue,
-                              width: 3,
-                            )),
-                        margin: const EdgeInsets.all(8.0),
-                        padding: const EdgeInsets.all(7),
-                        child: Text(
-                          'R\$ ${e.valor.toString()}',
-                          style: const TextStyle(
-                              color: Colors.blue, fontWeight: FontWeight.w700),
-                        )),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          e.observacao,
-                          style: const TextStyle(
-                              fontSize: 19, fontWeight: FontWeight.w600),
-                        ),
-                        Text(
-                            DateFormat('dd/MM/yyyy hh:mm:ss').format(e.emissao),
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w400))
-                      ],
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      margin: EdgeInsets.only(left: 20),
-                      decoration: const BoxDecoration(
-                          color: Color.fromARGB(255, 31, 133, 217),
-                          borderRadius: BorderRadius.all(Radius.circular(15))),
-                      child: Text(
-                        e.categoria,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    )
-                  ],
-                ),
-              );
-            }).toList(),
-          ),
+          ListaLancamentos(_listaLancamentos),
           FloatingActionButton(
-            onPressed: () {},
-            child: Icon(Icons.add),
+            onPressed: () => _startAddLancamento(context),
+            child: const Icon(Icons.add),
           )
         ],
       ),
