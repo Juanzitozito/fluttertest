@@ -36,7 +36,7 @@ class NewLancamento extends StatelessWidget {
             ),
             DateTimeField(
                 onDateSelected: (date) {
-                  print(date);
+                  emissaoController.text = date.toString();
                 },
                 selectedDate: DateTime.now()),
             ElevatedButton(
@@ -44,7 +44,8 @@ class NewLancamento extends StatelessWidget {
                   addInput(
                       observacaoController.text,
                       double.parse(valorController.text),
-                      categoriaController.text);
+                      categoriaController.text,
+                      emissaoController.text);
                 },
                 child: Text('adicionar'))
           ],

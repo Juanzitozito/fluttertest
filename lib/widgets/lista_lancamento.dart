@@ -30,7 +30,7 @@ class ListaLancamentos extends StatelessWidget {
                     margin: const EdgeInsets.all(8.0),
                     padding: const EdgeInsets.all(7),
                     child: Text(
-                      'R\$ ${e.valor.toString()}',
+                      'R\$ ${e.valor.toStringAsFixed(2)}',
                       style: const TextStyle(
                           color: Colors.blue, fontWeight: FontWeight.w700),
                     )),
@@ -49,7 +49,7 @@ class ListaLancamentos extends StatelessWidget {
                 ),
                 Container(
                   padding: const EdgeInsets.all(8),
-                  margin: EdgeInsets.only(left: 10),
+                  margin: const EdgeInsets.only(left: 10),
                   decoration: const BoxDecoration(
                       color: Color.fromARGB(255, 31, 133, 217),
                       borderRadius: BorderRadius.all(Radius.circular(15))),

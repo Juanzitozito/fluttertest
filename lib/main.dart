@@ -1,9 +1,11 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertest/entity/categoria.dart';
 import 'package:fluttertest/entity/lancamento.dart';
 import 'package:fluttertest/widgets/lista_lancamento.dart';
+import 'package:fluttertest/widgets/nav_bar.dart';
 import 'package:fluttertest/widgets/new_lancamento.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
@@ -13,7 +15,11 @@ void main(List<String> args) async {
 
   await Hive.initFlutter();
 
-  return runApp(MyApp());
+  return runApp(
+    ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -32,33 +38,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Categoria> _listaCategorias = [
-    Categoria(id: 1, nome: 'automóveis'),
-    Categoria(id: 2, nome: 'jogos'),
-    Categoria(id: 3, nome: 'cosméticos'),
-    Categoria(id: 1, nome: 'automóveis'),
-    Categoria(id: 2, nome: 'jogos'),
-    Categoria(id: 3, nome: 'cosméticos'),
-    Categoria(id: 1, nome: 'automóveis'),
-    Categoria(id: 2, nome: 'jogos'),
-    Categoria(id: 3, nome: 'cosméticos'),
-    Categoria(id: 1, nome: 'automóveis'),
-    Categoria(id: 2, nome: 'jogos'),
-    Categoria(id: 3, nome: 'cosméticos'),
-    Categoria(id: 1, nome: 'automóveis'),
-    Categoria(id: 2, nome: 'jogos'),
-    Categoria(id: 3, nome: 'cosméticos'),
-    Categoria(id: 1, nome: 'automóveis'),
-    Categoria(id: 2, nome: 'jogos'),
-    Categoria(id: 3, nome: 'cosméticos'),
-    Categoria(id: 1, nome: 'automóveis'),
-    Categoria(id: 2, nome: 'jogos'),
-    Categoria(id: 3, nome: 'cosméticos'),
-    Categoria(id: 1, nome: 'automóveis'),
-    Categoria(id: 2, nome: 'jogos'),
-    Categoria(id: 3, nome: 'cosméticos'),
-  ];
-
   final List<Lancamento> _listaLancamentos = [
     Lancamento(
         id: 1,
@@ -74,11 +53,18 @@ class _MyHomePageState extends State<MyHomePage> {
         categoria: 'automóveis')
   ];
 
+  final List<Categoria> _listaCategorias = [
+    Categoria(id: 1, nome: 'automóveis'),
+    Categoria(id: 2, nome: 'jogos'),
+    Categoria(id: 3, nome: 'cosméticos'),
+  ];
+
   double totalizador = 0;
 
-  void _addNewLancamento(String observacao, double valor, String categoria) {
+  void _addNewLancamento(
+      String observacao, double valor, String categoria, String emissao) {
     final newLanc = Lancamento(
-        emissao: DateTime.now(),
+        emissao: DateTime.parse(emissao),
         valor: valor,
         observacao: observacao,
         categoria: categoria,
@@ -100,33 +86,12 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavBar(listaCategorias: _listaCategorias),
       appBar: AppBar(
         title: const Text('My expenses app'),
       ),
       body: SingleChildScrollView(
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Row(
-            children: [
-              Container(
-                color: Colors.black38,
-                width: MediaQuery.of(context).size.width * 0.5,
-                height: MediaQuery.of(context).size.height * 0.4,
-                child: (Card(
-                    child: SingleChildScrollView(
-                  padding: EdgeInsets.only(left: 5),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: _listaCategorias.map((e) {
-                      return Text(e.nome);
-                    }).toList(),
-                  ),
-                ))),
-              ),
-              Text('data')
-            ],
-          ),
-          ListaLancamentos(_listaLancamentos),
-        ]),
+        child: ListaLancamentos(_listaLancamentos),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromARGB(255, 13, 83, 140),
