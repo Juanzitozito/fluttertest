@@ -57,6 +57,14 @@ class _MyHomePageState extends State<MyHomePage> {
     Categoria(id: 1, nome: 'automóveis'),
     Categoria(id: 2, nome: 'jogos'),
     Categoria(id: 3, nome: 'cosméticos'),
+    Categoria(id: 1, nome: 'automóveis'),
+    Categoria(id: 2, nome: 'jogos'),
+    Categoria(id: 3, nome: 'cosméticos'),
+    Categoria(id: 1, nome: 'automóveis'),
+    Categoria(id: 2, nome: 'jogos'),
+    Categoria(id: 3, nome: 'cosméticos'),
+    Categoria(id: 1, nome: 'automóveis'),
+    Categoria(id: 2, nome: 'jogos'),
   ];
 
   double totalizador = 0;
