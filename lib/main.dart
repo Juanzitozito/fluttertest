@@ -1,14 +1,10 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fluttertest/entity/categoria.dart';
 import 'package:fluttertest/entity/lancamento.dart';
 import 'package:fluttertest/widgets/lista_lancamento.dart';
 import 'package:fluttertest/widgets/nav_bar.dart';
 import 'package:fluttertest/widgets/new_lancamento.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:intl/intl.dart';
 
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,20 +49,6 @@ class _MyHomePageState extends State<MyHomePage> {
         categoria: 'automóveis')
   ];
 
-  final List<Categoria> _listaCategorias = [
-    Categoria(id: 1, nome: 'automóveis'),
-    Categoria(id: 2, nome: 'jogos'),
-    Categoria(id: 3, nome: 'cosméticos'),
-    Categoria(id: 1, nome: 'automóveis'),
-    Categoria(id: 2, nome: 'jogos'),
-    Categoria(id: 3, nome: 'cosméticos'),
-    Categoria(id: 1, nome: 'automóveis'),
-    Categoria(id: 2, nome: 'jogos'),
-    Categoria(id: 3, nome: 'cosméticos'),
-    Categoria(id: 1, nome: 'automóveis'),
-    Categoria(id: 2, nome: 'jogos'),
-  ];
-
   double totalizador = 0;
 
   void _addNewLancamento(
@@ -94,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavBar(listaCategorias: _listaCategorias),
+      drawer: NavBar(),
       appBar: AppBar(
         title: const Text('My expenses app'),
       ),

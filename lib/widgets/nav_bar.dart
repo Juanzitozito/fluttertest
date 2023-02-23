@@ -3,10 +3,6 @@ import 'package:fluttertest/entity/categoria.dart';
 import 'package:fluttertest/pages/categorias.dart';
 
 class NavBar extends StatelessWidget {
-  final List<Categoria>? listaCategorias;
-
-  NavBar({this.listaCategorias});
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -32,11 +28,8 @@ class NavBar extends StatelessWidget {
               color: Colors.blue,
             ),
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          Categorias(listaCategorias: listaCategorias)));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Categorias()));
             },
             title: const Text(
               'categorias',

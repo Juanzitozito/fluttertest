@@ -1,11 +1,28 @@
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 
-class NewCategorias extends StatelessWidget {
-  const NewCategorias({super.key});
+class NewCategoria extends StatelessWidget {
+  final nomeController = TextEditingController();
+  final Function addInput;
+
+  NewCategoria(this.addInput, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Card(
+      elevation: 5,
+      child: Column(
+        children: [
+          TextField(
+            decoration: const InputDecoration(labelText: 'nome'),
+            controller: nomeController,
+          ),
+          ElevatedButton(
+              onPressed: () {
+                addInput(nomeController.text);
+              },
+              child: const Text('adicionar'))
+        ],
+      ),
+    );
   }
 }
