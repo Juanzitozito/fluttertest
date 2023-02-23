@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertest/entity/categoria.dart';
+import 'package:fluttertest/main.dart';
 import 'package:fluttertest/widgets/grid_items_categorias.dart';
 
-class ListaCategorias extends StatelessWidget {
+class ListaCategorias extends ConsumerWidget {
   final List<Categoria> listaCategorias;
 
   ListaCategorias(this.listaCategorias);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+    final catego = ref.watch(listaDeCategorias);
+
     return GridView.builder(
       padding: const EdgeInsets.all(8.0),
       itemCount: listaCategorias.length,

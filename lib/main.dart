@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertest/entity/categoria.dart';
 import 'package:fluttertest/entity/lancamento.dart';
 import 'package:fluttertest/widgets/lista_lancamento.dart';
 import 'package:fluttertest/widgets/nav_bar.dart';
@@ -11,12 +12,23 @@ void main(List<String> args) async {
 
   await Hive.initFlutter();
 
+  var categoriasBox = await Hive.openBox('categorias');
+  var lancamnetosBox = await Hive.openBox('lancamnetos');
+
   return runApp(
     ProviderScope(
       child: MyApp(),
     ),
   );
 }
+
+final listaDeCategorias = Provider<List<Categoria>>((ref) {
+  return [
+    Categoria(id: 1, nome: 'automóveis'),
+    Categoria(id: 2, nome: 'jogos'),
+    Categoria(id: 3, nome: 'cosméticos'),
+  ];
+});
 
 class MyApp extends StatelessWidget {
   @override
