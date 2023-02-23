@@ -13,7 +13,7 @@ void main(List<String> args) async {
   await Hive.initFlutter();
 
   var categoriasBox = await Hive.openBox('categorias');
-  var lancamnetosBox = await Hive.openBox('lancamnetos');
+  var lancamentosBox = await Hive.openBox('lancamnetos');
 
   return runApp(
     ProviderScope(
@@ -61,7 +61,11 @@ class _MyHomePageState extends State<MyHomePage> {
         categoria: 'automóveis')
   ];
 
-  double totalizador = 0;
+  List totalizador = [];
+
+  final teste = _listaLancamentos.forEach((e, totatlizador) {
+    return totalizador.add(e);
+  });
 
   void _addNewLancamento(
       String observacao, double valor, String categoria, String emissao) {
@@ -92,8 +96,12 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text('My expenses app'),
       ),
-      body: SingleChildScrollView(
-        child: ListaLancamentos(_listaLancamentos),
+      body: Column(
+        children: [
+          SingleChildScrollView(
+            child: ListaLancamentos(_listaLancamentos),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromARGB(255, 13, 83, 140),
