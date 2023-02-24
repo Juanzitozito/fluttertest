@@ -79,10 +79,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _startAddLancamento(BuildContext ctx) {
+    final opcoesCategoria = Boxes.getCategorias().values;
+
     showModalBottomSheet(
         context: ctx,
         builder: (_) {
-          return NewLancamento(_addNewLancamento);
+          return NewLancamento(_addNewLancamento, opcoesCategoria);
         });
   }
 
