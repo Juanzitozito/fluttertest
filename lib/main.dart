@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertest/boxes.dart';
 import 'package:fluttertest/entity/categoria.dart';
 import 'package:fluttertest/entity/lancamento.dart';
 import 'package:fluttertest/widgets/lista_lancamento.dart';
@@ -12,8 +13,11 @@ void main(List<String> args) async {
 
   await Hive.initFlutter();
 
-  var categoriasBox = await Hive.openBox('categorias');
-  var lancamentosBox = await Hive.openBox('lancamnetos');
+  Hive.registerAdapter(CategoriaAdapter());
+  Hive.registerAdapter(LancamentoAdapter());
+
+  var categoriasBox = await Hive.openBox<Categoria>('categorias');
+  var lancamentosBox = await Hive.openBox<Lancamento>('lancamentos');
 
   return runApp(
     ProviderScope(
@@ -46,7 +50,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Lancamento> _listaLancamentos = [
+  /* final List<Lancamento> _listaLancamentos = [
     Lancamento(
         id: 1,
         emissao: DateTime.now(),
@@ -59,13 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
         valor: 39.45,
         observacao: 'brief explanation',
         categoria: 'automóveis')
-  ];
-
-  List totalizador = [];
-
-  final teste = _listaLancamentos.forEach((e, totatlizador) {
-    return totalizador.add(e);
-  });
+  ]; */
 
   void _addNewLancamento(
       String observacao, double valor, String categoria, String emissao) {
@@ -76,9 +74,8 @@ class _MyHomePageState extends State<MyHomePage> {
         categoria: categoria,
         id: UniqueKey().hashCode);
 
-    setState(() {
-      _listaLancamentos.add(newLanc);
-    });
+    final box = Boxes.getLancamentos();
+    box.add(newLanc);
   }
 
   void _startAddLancamento(BuildContext ctx) {
@@ -99,7 +96,14 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         children: [
           SingleChildScrollView(
-            child: ListaLancamentos(_listaLancamentos),
+            child: ValueListenableBuilder<Box<Lancamento>>(
+              valueListenable: Boxes.getLancamentos().listenable(),
+              builder: (content, box, _) {
+                final lancamentos = box.values.toList().cast<Lancamento>();
+
+                return ListaLancamentos(lancamentos);
+              },
+            ),
           ),
         ],
       ),
