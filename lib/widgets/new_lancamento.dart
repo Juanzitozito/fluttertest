@@ -52,7 +52,7 @@ class NewLancamento extends StatelessWidget {
             ),
             SelectFormField(
               items: opcoesCategorias.map((e) {
-                return {'value': e.nome, 'label': e.nome}.cast();
+                return Map<String, String>('value': e.nome, 'label': e.nome);
               }).toList(),
               decoration:
                   const InputDecoration(labelText: 'Categoria do Produto'),
