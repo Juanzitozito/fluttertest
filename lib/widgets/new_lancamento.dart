@@ -51,9 +51,9 @@ class NewLancamento extends StatelessWidget {
               controller: valorController,
             ),
             SelectFormField(
-              items: opcoesCategorias.map((e) {
-                return Map<String, String>('value': e.nome, 'label': e.nome);
-              }).toList(),
+              /* items: opcoesCategorias.map((e) {
+                return {'value': e.nome, 'label': e.nome}.cast();
+              }).toList(), */
               decoration:
                   const InputDecoration(labelText: 'Categoria do Produto'),
               controller: categoriaController,
