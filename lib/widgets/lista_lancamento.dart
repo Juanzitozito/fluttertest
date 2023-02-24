@@ -4,8 +4,12 @@ import 'package:intl/intl.dart';
 
 class ListaLancamentos extends StatelessWidget {
   final List<Lancamento> lancamentos;
+  final Function deleteLancamentos;
+  final Function editLancamentos;
 
-  const ListaLancamentos(this.lancamentos, {super.key});
+  const ListaLancamentos(
+      this.lancamentos, this.deleteLancamentos, this.editLancamentos,
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -61,12 +65,12 @@ class ListaLancamentos extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () => editLancamentos(e),
                         icon: const Icon(Icons.edit),
                         padding: const EdgeInsets.all(10),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () => deleteLancamentos(e),
                         icon: const Icon(Icons.delete),
                         padding: const EdgeInsets.all(10),
                       ),

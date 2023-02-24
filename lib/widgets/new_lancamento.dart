@@ -15,7 +15,7 @@ class NewLancamento extends StatelessWidget {
     return Card(
       elevation: 5,
       child: Container(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [

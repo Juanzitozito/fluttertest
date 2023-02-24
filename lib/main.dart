@@ -86,6 +86,20 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
+  void _deleteLancamento(Lancamento lancamento) {
+    lancamento.delete();
+  }
+
+  void _editLancamento(Lancamento lancamento, String observacao, double valor,
+      String categoria, String emissao) {
+    lancamento.observacao = observacao;
+    lancamento.valor = valor;
+    lancamento.categoria = categoria;
+    lancamento.emissao = DateTime.parse(emissao);
+
+    lancamento.save();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,7 +115,8 @@ class _MyHomePageState extends State<MyHomePage> {
               builder: (content, box, _) {
                 final lancamentos = box.values.toList().cast<Lancamento>();
 
-                return ListaLancamentos(lancamentos);
+                return ListaLancamentos(
+                    lancamentos, _deleteLancamento, _editLancamento);
               },
             ),
           ),

@@ -10,18 +10,22 @@ class NewCategoria extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 5,
-      child: Column(
-        children: [
-          TextField(
-            decoration: const InputDecoration(labelText: 'nome'),
-            controller: nomeController,
-          ),
-          ElevatedButton(
-              onPressed: () {
-                addInput(nomeController.text);
-              },
-              child: const Text('adicionar'))
-        ],
+      child: Container(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            TextField(
+              decoration: const InputDecoration(labelText: 'nome'),
+              controller: nomeController,
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  addInput(nomeController.text);
+                },
+                child: const Text('adicionar'))
+          ],
+        ),
       ),
     );
   }
