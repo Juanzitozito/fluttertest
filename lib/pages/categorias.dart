@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertest/boxes.dart';
 import 'package:fluttertest/entity/categoria.dart';
@@ -20,7 +22,7 @@ class _CategoriasState extends State<Categorias> {
   ];
 
   void _addNewCategoria(String nome) {
-    final newCat = Categoria(nome: nome, id: UniqueKey().hashCode);
+    final newCat = Categoria(nome: nome, id: Random().nextInt(999999999));
 
     final box = Boxes.getCategorias();
     box.add(newCat);
@@ -32,6 +34,10 @@ class _CategoriasState extends State<Categorias> {
         builder: (_) {
           return NewCategoria(_addNewCategoria);
         });
+  }
+
+  void deleteCategoria(Categoria categoria) {
+    categoria.delete();
   }
 
   @override
@@ -55,7 +61,7 @@ class _CategoriasState extends State<Categorias> {
                 builder: (context, box, _) {
                   final categorias = box.values.toList().cast<Categoria>();
 
-                  return ListaCategorias(categorias);
+                  return ListaCategorias(categorias, deleteCategoria);
                 },
               ))),
     );

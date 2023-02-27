@@ -6,8 +6,9 @@ import 'package:fluttertest/widgets/grid_items_categorias.dart';
 
 class ListaCategorias extends ConsumerWidget {
   final List<Categoria> listaCategorias;
+  final Function deleteCategorias;
 
-  ListaCategorias(this.listaCategorias);
+  ListaCategorias(this.listaCategorias, this.deleteCategorias);
 
   @override
   Widget build(BuildContext context, ref) {
@@ -16,8 +17,8 @@ class ListaCategorias extends ConsumerWidget {
     return GridView.builder(
       padding: const EdgeInsets.all(8.0),
       itemCount: listaCategorias.length,
-      itemBuilder: (context, i) =>
-          ItensCategoria(listaCategorias[i].id, listaCategorias[i].nome),
+      itemBuilder: (context, i) => ItensCategoria(listaCategorias[i].id,
+          listaCategorias[i].nome, deleteCategorias, listaCategorias),
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 200, mainAxisSpacing: 15, crossAxisSpacing: 20),
     );

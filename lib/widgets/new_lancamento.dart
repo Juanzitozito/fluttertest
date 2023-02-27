@@ -50,14 +50,14 @@ class NewLancamento extends StatelessWidget {
               decoration: const InputDecoration(labelText: 'Valor'),
               controller: valorController,
             ),
-            SelectFormField(
-              /* items: opcoesCategorias.map((e) {
-                return {'value': e.nome, 'label': e.nome}.cast();
-              }).toList(), */
-              decoration:
-                  const InputDecoration(labelText: 'Categoria do Produto'),
-              controller: categoriaController,
-            ),
+            /*  DropdownButton<String>(
+                items: opcoesCategorias.map((e) {
+                  return DropdownMenuItem<String>(
+                    value: e.nome,
+                    child: Text(e.nome),
+                  );
+                }).toList(),
+                onChanged: (_) {}), */
             DateTimeField(
                 onDateSelected: (date) {
                   emissaoController.text = date.toString();

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertest/entity/categoria.dart';
 import 'package:fluttertest/pages/categorias.dart';
 
 class NavBar extends StatelessWidget {
