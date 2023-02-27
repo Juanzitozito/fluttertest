@@ -20,24 +20,18 @@ void main(List<String> args) async {
   var lancamentosBox = await Hive.openBox<Lancamento>('lancamentos');
 
   return runApp(
-    ProviderScope(
+    const ProviderScope(
       child: MyApp(),
     ),
   );
 }
 
-final listaDeCategorias = Provider<List<Categoria>>((ref) {
-  return [
-    Categoria(id: 1, nome: 'automóveis'),
-    Categoria(id: 2, nome: 'jogos'),
-    Categoria(id: 3, nome: 'cosméticos'),
-  ];
-});
-
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Expenses',
       home: MyHomePage(),
     );
@@ -45,26 +39,13 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  /* final List<Lancamento> _listaLancamentos = [
-    Lancamento(
-        id: 1,
-        emissao: DateTime.now(),
-        valor: 29.99,
-        observacao: 'description',
-        categoria: 'jogos'),
-    Lancamento(
-        id: 2,
-        emissao: DateTime.now(),
-        valor: 39.45,
-        observacao: 'brief explanation',
-        categoria: 'automóveis')
-  ]; */
-
   void _addNewLancamento(
       String observacao, double valor, String categoria, String emissao) {
     final newLanc = Lancamento(
@@ -79,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _startAddLancamento(BuildContext ctx) {
-    final opcoesCategoria = Boxes.getCategorias().values;
+    final opcoesCategoria = Boxes.getCategorias().values.toList();
 
     showModalBottomSheet(
         context: ctx,

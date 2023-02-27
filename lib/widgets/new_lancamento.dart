@@ -1,37 +1,26 @@
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertest/entity/categoria.dart';
-import 'package:select_form_field/select_form_field.dart';
 
-class NewLancamento extends StatelessWidget {
+class NewLancamento extends StatefulWidget {
   final Function addInput;
-  final opcoesCategorias;
+  final List opcoesCategorias;
+
+  const NewLancamento(this.addInput, this.opcoesCategorias, {super.key});
+
+  @override
+  State<NewLancamento> createState() => _NewLancamentoState();
+}
+
+class _NewLancamentoState extends State<NewLancamento> {
   final observacaoController = TextEditingController();
+
   final valorController = TextEditingController();
+
   final categoriaController = TextEditingController();
+
   final emissaoController = TextEditingController();
 
-  final List<Map<String, dynamic>> _itens = [
-    {
-      'value': 'boxValue',
-      'label': 'Box Label',
-      'icon': Icon(Icons.stop),
-    },
-    {
-      'value': 'circleValue',
-      'label': 'Circle Label',
-      'icon': Icon(Icons.fiber_manual_record),
-      'textStyle': TextStyle(color: Colors.red),
-    },
-    {
-      'value': 'starValue',
-      'label': 'Star Label',
-      'enable': false,
-      'icon': Icon(Icons.grade),
-    },
-  ];
-
-  NewLancamento(this.addInput, this.opcoesCategorias, {super.key});
+  String? _value;
 
   @override
   Widget build(BuildContext context) {
@@ -50,14 +39,19 @@ class NewLancamento extends StatelessWidget {
               decoration: const InputDecoration(labelText: 'Valor'),
               controller: valorController,
             ),
-            /*  DropdownButton<String>(
-                items: opcoesCategorias.map((e) {
+            DropdownButton<String>(
+                value: _value,
+                items: widget.opcoesCategorias.map((e) {
                   return DropdownMenuItem<String>(
                     value: e.nome,
                     child: Text(e.nome),
                   );
                 }).toList(),
-                onChanged: (_) {}), */
+                onChanged: (String? v) {
+                  setState(() {
+                    _value = v;
+                  });
+                }),
             DateTimeField(
                 onDateSelected: (date) {
                   emissaoController.text = date.toString();
@@ -65,13 +59,13 @@ class NewLancamento extends StatelessWidget {
                 selectedDate: DateTime.now()),
             ElevatedButton(
                 onPressed: () {
-                  addInput(
+                  widget.addInput(
                       observacaoController.text,
                       double.parse(valorController.text),
-                      categoriaController.text,
+                      _value,
                       emissaoController.text.toString());
                 },
-                child: Text('adicionar'))
+                child: const Text('adicionar'))
           ],
         ),
       ),

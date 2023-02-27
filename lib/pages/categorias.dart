@@ -15,12 +15,6 @@ class Categorias extends StatefulWidget {
 }
 
 class _CategoriasState extends State<Categorias> {
-  final List<Categoria> _listaCategorias = [
-    Categoria(id: 1, nome: 'automóveis'),
-    Categoria(id: 2, nome: 'jogos'),
-    Categoria(id: 3, nome: 'cosméticos'),
-  ];
-
   void _addNewCategoria(String nome) {
     final newCat = Categoria(nome: nome, id: Random().nextInt(999999999));
 

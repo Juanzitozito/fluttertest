@@ -7,10 +7,9 @@ class ItensCategoria extends StatelessWidget {
   final Function deleteCategoria;
   final List<Categoria> listaCategorias;
 
-  var teste;
-
-  ItensCategoria(
-      this.id, this.nome, this.deleteCategoria, this.listaCategorias);
+  const ItensCategoria(
+      this.id, this.nome, this.deleteCategoria, this.listaCategorias,
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
