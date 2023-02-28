@@ -5,10 +5,13 @@ class ItensCategoria extends StatelessWidget {
   final int? id;
   final String nome;
   final Function deleteCategoria;
+  /* final Function editCategoria; */
   final List<Categoria> listaCategorias;
+  /* final Function startEditCategoria; */
 
   const ItensCategoria(
       this.id, this.nome, this.deleteCategoria, this.listaCategorias,
+      /* this.editCategoria, this.startEditCategoria, */
       {super.key});
 
   @override
@@ -32,6 +35,12 @@ class ItensCategoria extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                /* IconButton(
+                    onPressed: () {
+                      listaCategorias.retainWhere((e) => e.id == id);
+                      return editCategoria(listaCategorias[0]);
+                    },
+                    icon: const Icon(Icons.edit)), */
                 IconButton(
                     onPressed: () {
                       listaCategorias.retainWhere((e) => e.id == id);

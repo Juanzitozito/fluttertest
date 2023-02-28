@@ -105,6 +105,8 @@ class _MyHomePageState extends State<MyHomePage> {
     lancamento.save();
   }
 
+  double contador = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,10 +114,10 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text('My expenses app'),
       ),
-      body: Column(
-        children: [
-          SingleChildScrollView(
-            child: ValueListenableBuilder<Box<Lancamento>>(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            ValueListenableBuilder<Box<Lancamento>>(
               valueListenable: Boxes.getLancamentos().listenable(),
               builder: (content, box, _) {
                 final lancamentos = box.values.toList().cast<Lancamento>();
@@ -124,8 +126,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     lancamentos, _deleteLancamento, _startEditLancamento);
               },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromARGB(255, 13, 83, 140),

@@ -30,6 +30,10 @@ class _CategoriasState extends State<Categorias> {
         });
   }
 
+  _startEditCategoria(Categoria categoria) {}
+
+  _editCategoria(Categoria categoria) {}
+
   void deleteCategoria(Categoria categoria) {
     categoria.delete();
   }
@@ -55,7 +59,8 @@ class _CategoriasState extends State<Categorias> {
                 builder: (context, box, _) {
                   final categorias = box.values.toList().cast<Categoria>();
 
-                  return ListaCategorias(categorias, deleteCategoria);
+                  return ListaCategorias(categorias,
+                      deleteCategoria /* _editCategoria, _startEditCategoria */);
                 },
               ))),
     );
