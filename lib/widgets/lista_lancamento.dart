@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertest/entity/lancamento.dart';
 import 'package:intl/intl.dart';
+import 'package:to_csv/to_csv.dart' as export_csv;
 
 class ListaLancamentos extends StatelessWidget {
   final List<Lancamento> lancamentos;
   final Function deleteLancamentos;
   final Function startEditLancamentos;
   double contador = 0;
+  final listaCsv = <List<String>>[];
 
   ListaLancamentos(
       this.lancamentos, this.deleteLancamentos, this.startEditLancamentos,
@@ -20,6 +22,14 @@ class ListaLancamentos extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: lancamentos.map((e) {
               contador += e.valor;
+
+              listaCsv.add([
+                e.emissao.toString(),
+                e.valor.toString(),
+                e.observacao,
+                e.categoria
+              ]);
+
               return Container(
                 width: double.infinity,
                 child: Card(
@@ -90,7 +100,19 @@ class ListaLancamentos extends StatelessWidget {
               );
             }).toList()),
         Text(
-            'Total de ${lancamentos.length} registros, resultando em um total de  R\$${contador.toString()}')
+            'Total de ${lancamentos.length} registros, resultando em um total de  R\$${contador.toString()}'),
+        IconButton(
+            onPressed: () {
+              final header = <String>[];
+
+              header.add('data');
+              header.add('valor');
+              header.add('observacao');
+              header.add('categoria');
+
+              export_csv.myCSV(header, listaCsv);
+            },
+            icon: const Icon(Icons.import_export))
       ],
     );
   }
