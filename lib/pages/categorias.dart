@@ -20,6 +20,7 @@ class _CategoriasState extends State<Categorias> {
 
     final box = Boxes.getCategorias();
     box.add(newCat);
+    Navigator.pop(context);
   }
 
   void _startAddCategoria(BuildContext ctx) {

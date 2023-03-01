@@ -59,6 +59,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
     final box = Boxes.getLancamentos();
     box.add(newLanc);
+
+    Navigator.pop(context);
   }
 
   void _startAddLancamento(BuildContext ctx) {
@@ -103,6 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
     lancamento.emissao = DateTime.parse(emissao);
 
     lancamento.save();
+    Navigator.pop(context);
   }
 
   double contador = 0;
