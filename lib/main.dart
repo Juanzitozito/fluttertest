@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _startEditLancamento(BuildContext ctx, id) {
     final opcoesCategoria = Boxes.getCategorias().values.toList();
 
-    final abc = Hive.box<Lancamento>('lancamentos')
+    final edit = Hive.box<Lancamento>('lancamentos')
         .values
         .where((e) => e.id == id)
         .toList()
@@ -91,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
           return NewLancamento(
               addInput: _editLancamento,
               opcoesCategorias: opcoesCategoria,
-              editingElement: abc[0]);
+              editingElement: edit[0]);
         });
   }
 

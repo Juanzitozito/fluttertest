@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertest/pages/categorias.dart';
+import 'package:fluttertest/pages/consultas.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({super.key});
@@ -40,12 +41,16 @@ class NavBar extends StatelessWidget {
             ),
           ),
           const Divider(),
-          const ListTile(
-            leading: Icon(
+          ListTile(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Consultas()));
+            },
+            leading: const Icon(
               Icons.add_box_outlined,
               color: Colors.blue,
             ),
-            title: Text(
+            title: const Text(
               'Consultas',
               style: TextStyle(
                 fontSize: 20,
