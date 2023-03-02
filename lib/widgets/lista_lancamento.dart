@@ -17,12 +17,11 @@ class ListaLancamentos extends StatefulWidget {
 }
 
 class _ListaLancamentosState extends State<ListaLancamentos> {
-  double contador = 0;
-
   final listaCsv = <List<String>>[];
 
   @override
   Widget build(BuildContext context) {
+    double contador = 0;
     return Column(
       children: [
         Column(

@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertest/boxes.dart';
@@ -110,6 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   DateTimeRange? _selectedDate;
+  String? _valorCategoria;
 
   void _show() async {
     final DateTimeRange? result = await showDateRangePicker(
@@ -132,12 +132,16 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  void _categoriaFilter(String valor) {
+    setState(() {
+      _valorCategoria = valor;
+    });
+  }
+
   void _clearFilter() {
     _selectedDate = null;
     setState(() {});
   }
-
-  double contador = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -153,12 +157,20 @@ class _MyHomePageState extends State<MyHomePage> {
               valueListenable: Boxes.getLancamentos().listenable(),
               builder: (content, box, _) {
                 var lancamentos = box.values.toList().cast<Lancamento>();
-                if (_selectedDate != null) {
-                  lancamentos =
-                      box.values.toList().cast<Lancamento>().where((e) {
-                    return e.emissao.difference(_selectedDate!.end).inDays <=
-                        10;
-                  }).toList();
+                if (_selectedDate != null && _valorCategoria != null) {
+                  lancamentos = box.values
+                      .toList()
+                      .cast<Lancamento>()
+                      .where((e) {
+                        return e.emissao
+                                .difference(_selectedDate!.end)
+                                .inDays <=
+                            10;
+                      })
+                      .where((e) => e.observacao
+                          .toLowerCase()
+                          .contains(_valorCategoria!.toLowerCase()))
+                      .toList();
                 } else {
                   lancamentos =
                       box.values.toList().cast<Lancamento>().where((e) {
@@ -171,17 +183,32 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             SizedBox(
-              child: Row(
+              child: Column(
                 children: [
-                  ElevatedButton(
-                    onPressed: _show,
-                    child: const Text('tento'),
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        onPressed: _show,
+                        child: const Text('tento'),
+                      ),
+                      IconButton(
+                        tooltip: (_selectedDate == null)
+                            ? 'filtro não está ativado'
+                            : 'limpar filtro',
+                        onPressed: _clearFilter,
+                        icon: Icon(Icons.cancel_outlined,
+                            color: (_selectedDate == null)
+                                ? Colors.black54
+                                : Colors.red),
+                      ),
+                    ],
                   ),
-                  IconButton(
-                    onPressed: _clearFilter,
-                    icon: const Icon(
-                      Icons.cancel_outlined,
-                      color: Colors.red,
+                  Container(
+                    width: 500,
+                    height: 500,
+                    child: TextField(
+                      textDirection: TextDirection.ltr,
+                      onChanged: _categoriaFilter,
                     ),
                   )
                 ],
