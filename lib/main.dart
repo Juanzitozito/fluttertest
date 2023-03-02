@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertest/boxes.dart';
@@ -108,6 +109,34 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.pop(context);
   }
 
+  DateTimeRange? _selectedDate;
+
+  void _show() async {
+    final DateTimeRange? result = await showDateRangePicker(
+      context: context,
+      firstDate: DateTime(2022, 1, 1),
+      lastDate: DateTime(2030, 12, 31),
+      currentDate: DateTime.now(),
+      saveText: 'Done',
+    );
+
+    if (result != null) {
+      // Rebuild the UI
+      print(result.start.toString());
+      setState(() {
+        _selectedDate = result;
+      });
+    } else {
+      setState(() {});
+      print('aaaaaa');
+    }
+  }
+
+  void _clearFilter() {
+    _selectedDate = null;
+    setState(() {});
+  }
+
   double contador = 0;
 
   @override
@@ -123,11 +152,40 @@ class _MyHomePageState extends State<MyHomePage> {
             ValueListenableBuilder<Box<Lancamento>>(
               valueListenable: Boxes.getLancamentos().listenable(),
               builder: (content, box, _) {
-                final lancamentos = box.values.toList().cast<Lancamento>();
+                var lancamentos = box.values.toList().cast<Lancamento>();
+                if (_selectedDate != null) {
+                  lancamentos =
+                      box.values.toList().cast<Lancamento>().where((e) {
+                    return e.emissao.difference(_selectedDate!.end).inDays <=
+                        10;
+                  }).toList();
+                } else {
+                  lancamentos =
+                      box.values.toList().cast<Lancamento>().where((e) {
+                    return e.emissao.difference(DateTime.now()).inDays <= 10;
+                  }).toList();
+                }
 
                 return ListaLancamentos(
                     lancamentos, _deleteLancamento, _startEditLancamento);
               },
+            ),
+            SizedBox(
+              child: Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: _show,
+                    child: const Text('tento'),
+                  ),
+                  IconButton(
+                    onPressed: _clearFilter,
+                    icon: const Icon(
+                      Icons.cancel_outlined,
+                      color: Colors.red,
+                    ),
+                  )
+                ],
+              ),
             ),
           ],
         ),

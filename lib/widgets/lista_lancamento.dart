@@ -3,16 +3,23 @@ import 'package:fluttertest/entity/lancamento.dart';
 import 'package:intl/intl.dart';
 import 'package:to_csv/to_csv.dart' as export_csv;
 
-class ListaLancamentos extends StatelessWidget {
+class ListaLancamentos extends StatefulWidget {
   final List<Lancamento> lancamentos;
   final Function deleteLancamentos;
   final Function startEditLancamentos;
-  double contador = 0;
-  final listaCsv = <List<String>>[];
 
-  ListaLancamentos(
+  const ListaLancamentos(
       this.lancamentos, this.deleteLancamentos, this.startEditLancamentos,
       {super.key});
+
+  @override
+  State<ListaLancamentos> createState() => _ListaLancamentosState();
+}
+
+class _ListaLancamentosState extends State<ListaLancamentos> {
+  double contador = 0;
+
+  final listaCsv = <List<String>>[];
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +27,7 @@ class ListaLancamentos extends StatelessWidget {
       children: [
         Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: lancamentos.map((e) {
+            children: widget.lancamentos.map((e) {
               contador += e.valor;
 
               listaCsv.add([
@@ -30,7 +37,7 @@ class ListaLancamentos extends StatelessWidget {
                 e.categoria
               ]);
 
-              return Container(
+              return SizedBox(
                 width: double.infinity,
                 child: Card(
                   elevation: 7.0,
@@ -83,12 +90,12 @@ class ListaLancamentos extends StatelessWidget {
                         children: [
                           IconButton(
                             onPressed: () =>
-                                startEditLancamentos(context, e.id),
+                                widget.startEditLancamentos(context, e.id),
                             icon: const Icon(Icons.edit),
                             padding: const EdgeInsets.all(10),
                           ),
                           IconButton(
-                            onPressed: () => deleteLancamentos(e),
+                            onPressed: () => widget.deleteLancamentos(e),
                             icon: const Icon(Icons.delete),
                             padding: const EdgeInsets.all(10),
                           ),
@@ -100,7 +107,7 @@ class ListaLancamentos extends StatelessWidget {
               );
             }).toList()),
         Text(
-            'Total de ${lancamentos.length} registros, resultando em um total de  R\$${contador.toString()}'),
+            'Total de ${widget.lancamentos.length} registros, resultando em um total de  R\$${contador.toString()}'),
         IconButton(
             onPressed: () {
               final header = <String>[];
