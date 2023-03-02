@@ -109,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   DateTimeRange? _selectedDate;
-  String? _valorCategoria;
+  String? _stringObservacao;
 
   void _show() async {
     final DateTimeRange? result = await showDateRangePicker(
@@ -132,9 +132,9 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  void _categoriaFilter(String valor) {
+  void _observacaoFilter(String valor) {
     setState(() {
-      _valorCategoria = valor;
+      _stringObservacao = valor;
     });
   }
 
@@ -157,7 +157,7 @@ class _MyHomePageState extends State<MyHomePage> {
               valueListenable: Boxes.getLancamentos().listenable(),
               builder: (content, box, _) {
                 var lancamentos = box.values.toList().cast<Lancamento>();
-                if (_selectedDate != null && _valorCategoria != null) {
+                if (_selectedDate != null && _stringObservacao != null) {
                   lancamentos = box.values
                       .toList()
                       .cast<Lancamento>()
@@ -169,7 +169,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       })
                       .where((e) => e.observacao
                           .toLowerCase()
-                          .contains(_valorCategoria!.toLowerCase()))
+                          .contains(_stringObservacao!.toLowerCase()))
                       .toList();
                 } else {
                   lancamentos =
@@ -208,7 +208,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     height: 500,
                     child: TextField(
                       textDirection: TextDirection.ltr,
-                      onChanged: _categoriaFilter,
+                      onChanged: _observacaoFilter,
                     ),
                   )
                 ],
