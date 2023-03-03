@@ -121,14 +121,11 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     if (result != null) {
-      // Rebuild the UI
-      print(result.start.toString());
       setState(() {
         _selectedDate = result;
       });
     } else {
       setState(() {});
-      print('aaaaaa');
     }
   }
 
@@ -157,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
               valueListenable: Boxes.getLancamentos().listenable(),
               builder: (content, box, _) {
                 var lancamentos = box.values.toList().cast<Lancamento>();
-                if (_selectedDate != null && _stringObservacao != null) {
+                if (_selectedDate != null) {
                   lancamentos = box.values
                       .toList()
                       .cast<Lancamento>()

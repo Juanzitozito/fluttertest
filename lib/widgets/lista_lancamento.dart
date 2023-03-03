@@ -1,7 +1,10 @@
+import 'dart:io';
+
+import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertest/entity/lancamento.dart';
 import 'package:intl/intl.dart';
-import 'package:to_csv/to_csv.dart' as export_csv;
+import 'package:path_provider/path_provider.dart';
 
 class ListaLancamentos extends StatefulWidget {
   final List<Lancamento> lancamentos;
@@ -19,8 +22,23 @@ class ListaLancamentos extends StatefulWidget {
 class _ListaLancamentosState extends State<ListaLancamentos> {
   final listaCsv = <List<String>>[];
 
+  csv(listaCSV) async {
+    List<List<String>> data = listaCSV;
+
+    String csvData = const ListToCsvConverter().convert(data);
+    final String directory = (await getApplicationSupportDirectory()).path;
+    final path = "$directory\\csv-juan.csv";
+    print(path);
+    final File file = File(path);
+    await file.writeAsString(csvData);
+
+    return file;
+  }
+
   @override
   Widget build(BuildContext context) {
+    listaCsv.add(['data', 'valor', 'observacao', 'categoria']);
+
     double contador = 0;
     return Column(
       children: [
@@ -108,16 +126,9 @@ class _ListaLancamentosState extends State<ListaLancamentos> {
         Text(
             'Total de ${widget.lancamentos.length} registros, resultando em um total de  R\$${contador.toString()}'),
         IconButton(
-            onPressed: () {
-              final header = <String>[];
-
-              header.add('data');
-              header.add('valor');
-              header.add('observacao');
-              header.add('categoria');
-
-              export_csv.myCSV(header, listaCsv);
-            },
+            onPressed: (() async {
+              await csv(listaCsv);
+            }),
             icon: const Icon(Icons.import_export))
       ],
     );
