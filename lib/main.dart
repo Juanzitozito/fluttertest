@@ -28,6 +28,8 @@ void main(List<String> args) async {
   );
 }
 
+var categorias = Hive.box<Categoria>('categorias').values.toList();
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -154,26 +156,22 @@ class _MyHomePageState extends State<MyHomePage> {
               valueListenable: Boxes.getLancamentos().listenable(),
               builder: (content, box, _) {
                 var lancamentos = box.values.toList().cast<Lancamento>();
-                if (_selectedDate != null) {
-                  lancamentos = box.values
-                      .toList()
-                      .cast<Lancamento>()
-                      .where((e) {
-                        return e.emissao
-                                .difference(_selectedDate!.end)
-                                .inDays <=
-                            10;
-                      })
-                      .where((e) => e.observacao
-                          .toLowerCase()
-                          .contains(_stringObservacao!.toLowerCase()))
-                      .toList();
-                } else {
-                  lancamentos =
-                      box.values.toList().cast<Lancamento>().where((e) {
-                    return e.emissao.difference(DateTime.now()).inDays <= 10;
-                  }).toList();
-                }
+                var observacao = _stringObservacao ?? '';
+                var data = _selectedDate ??
+                    DateTimeRange(start: DateTime.now(), end: DateTime.now());
+                var categoria = 'categoria1';
+
+                lancamentos = box.values
+                    .toList()
+                    .cast<Lancamento>()
+                    .where((e) {
+                      return e.emissao.difference(data.end).inDays <= 10;
+                    })
+                    .where((e) => e.observacao
+                        .toLowerCase()
+                        .contains(observacao.toLowerCase()))
+                    .where((e) => e.categoria == categoria)
+                    .toList();
 
                 return ListaLancamentos(
                     lancamentos, _deleteLancamento, _startEditLancamento);
@@ -200,12 +198,24 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ],
                   ),
-                  Container(
+                  SizedBox(
                     width: 500,
                     height: 500,
                     child: TextField(
                       textDirection: TextDirection.ltr,
                       onChanged: _observacaoFilter,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 1000,
+                    height: 1000,
+                    child: DropdownButton(
+                      items: categorias.map((e) {
+                        return DropdownMenuItem(child: Text(e.nome));
+                      }).toList(),
+                      onChanged: (value) {
+                        print(value);
+                      },
                     ),
                   )
                 ],

@@ -44,7 +44,7 @@ class NavBar extends StatelessWidget {
           ListTile(
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Consultas()));
+                  MaterialPageRoute(builder: (context) => const Consultas()));
             },
             leading: const Icon(
               Icons.add_box_outlined,

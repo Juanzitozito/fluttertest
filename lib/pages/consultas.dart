@@ -3,7 +3,7 @@ import 'package:fluttertest/boxes.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 class Consultas extends StatefulWidget {
-  Consultas({super.key});
+  const Consultas({super.key});
 
   @override
   State<Consultas> createState() => _ConsultasState();
@@ -30,13 +30,10 @@ class _ConsultasState extends State<Consultas> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => print(itens),
-      ),
       appBar: AppBar(
         title: const Text('consultas'),
       ),
-      body: Container(
+      body: SizedBox(
           width: double.infinity,
           height: double.infinity,
           child: PieChart(
