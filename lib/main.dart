@@ -174,7 +174,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     .toList()
                     .cast<Lancamento>()
                     .where((e) {
-                      return e.emissao.difference(data.end).inDays <= 10;
+                      return (_selectedDate != null)
+                          ? e.emissao.isAfter(data.start) &&
+                              e.emissao.isBefore(data.end)
+                          : e.emissao.difference(data.end).inDays <= 10;
                     })
                     .where((e) => e.observacao
                         .toLowerCase()
@@ -189,7 +192,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             SizedBox(
-              child: Column(
+              child: Row(
                 children: [
                   Row(
                     children: [
