@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertest/entity/lancamento.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:random_string_generator/random_string_generator.dart';
 
 class ListaLancamentos extends StatefulWidget {
   final List<Lancamento> lancamentos;
@@ -20,14 +21,14 @@ class ListaLancamentos extends StatefulWidget {
 }
 
 class _ListaLancamentosState extends State<ListaLancamentos> {
-  final listaCsv = <List<String>>[];
+  var generator = RandomStringGenerator(fixedLength: 20, hasSymbols: false);
 
   csv(listaCSV) async {
     List<List<String>> data = listaCSV;
 
     String csvData = const ListToCsvConverter().convert(data);
     final String directory = (await getApplicationSupportDirectory()).path;
-    final path = "$directory\\csv-juan.csv";
+    final path = "$directory\\csv-${generator.generate()}.csv";
     print(path);
     final File file = File(path);
     await file.writeAsString(csvData);
@@ -37,8 +38,8 @@ class _ListaLancamentosState extends State<ListaLancamentos> {
 
   @override
   Widget build(BuildContext context) {
+    final listaCsv = <List<String>>[];
     listaCsv.add(['data', 'valor', 'observacao', 'categoria']);
-
     double contador = 0;
     return Column(
       children: [

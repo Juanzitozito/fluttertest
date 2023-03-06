@@ -112,6 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   DateTimeRange? _selectedDate;
   String? _stringObservacao;
+  String? _valueDropdown;
 
   void _show() async {
     final DateTimeRange? result = await showDateRangePicker(
@@ -124,6 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     if (result != null) {
       setState(() {
+        print(result);
         _selectedDate = result;
       });
     } else {
@@ -139,6 +141,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _clearFilter() {
     _selectedDate = null;
+    setState(() {});
+  }
+
+  void _clearCategoriaFilter() {
+    _valueDropdown = null;
     setState(() {});
   }
 
@@ -159,7 +166,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 var observacao = _stringObservacao ?? '';
                 var data = _selectedDate ??
                     DateTimeRange(start: DateTime.now(), end: DateTime.now());
-                var categoria = 'categoria1';
+                var categoria = _valueDropdown ?? '';
+
+                print(data);
 
                 lancamentos = box.values
                     .toList()
@@ -170,7 +179,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     .where((e) => e.observacao
                         .toLowerCase()
                         .contains(observacao.toLowerCase()))
-                    .where((e) => e.categoria == categoria)
+                    .where((e) => e.categoria
+                        .toLowerCase()
+                        .contains(categoria.toLowerCase()))
                     .toList();
 
                 return ListaLancamentos(
@@ -184,7 +195,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       ElevatedButton(
                         onPressed: _show,
-                        child: const Text('tento'),
+                        child: const Text('data'),
                       ),
                       IconButton(
                         tooltip: (_selectedDate == null)
@@ -207,17 +218,26 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   SizedBox(
-                    width: 1000,
-                    height: 1000,
+                    width: 100,
+                    height: 100,
                     child: DropdownButton(
+                      value: _valueDropdown,
                       items: categorias.map((e) {
-                        return DropdownMenuItem(child: Text(e.nome));
+                        return DropdownMenuItem(
+                          value: e.nome,
+                          child: Text(e.nome),
+                        );
                       }).toList(),
                       onChanged: (value) {
-                        print(value);
+                        setState(() {
+                          _valueDropdown = value;
+                        });
                       },
                     ),
-                  )
+                  ),
+                  IconButton(
+                      onPressed: _clearCategoriaFilter,
+                      icon: const Icon(Icons.ac_unit_rounded))
                 ],
               ),
             ),
