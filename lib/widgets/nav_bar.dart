@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertest/pages/categorias.dart';
 import 'package:fluttertest/pages/consultas.dart';
+import 'package:fluttertest/pages/previsao_de_gastos.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({super.key});
@@ -11,19 +12,6 @@ class NavBar extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.all(15),
         children: [
-          const ListTile(
-            leading: Icon(
-              Icons.add_box_outlined,
-              color: Colors.blue,
-            ),
-            title: Text(
-              'lançamentos',
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-          ),
-          const Divider(),
           ListTile(
             leading: const Icon(
               Icons.add_box_outlined,
@@ -45,6 +33,23 @@ class NavBar extends StatelessWidget {
             onTap: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const Consultas()));
+            },
+            leading: const Icon(
+              Icons.add_box_outlined,
+              color: Colors.blue,
+            ),
+            title: const Text(
+              'Consultas',
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
+          ),
+          const Divider(),
+          ListTile(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => PrevisaoDeGastos()));
             },
             leading: const Icon(
               Icons.add_box_outlined,
