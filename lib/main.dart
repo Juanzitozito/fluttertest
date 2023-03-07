@@ -191,39 +191,39 @@ class _MyHomePageState extends State<MyHomePage> {
                     lancamentos, _deleteLancamento, _startEditLancamento);
               },
             ),
-            SizedBox(
-              child: Row(
-                children: [
-                  Row(
-                    children: [
-                      ElevatedButton(
-                        onPressed: _show,
-                        child: const Text('data'),
-                      ),
-                      IconButton(
-                        tooltip: (_selectedDate == null)
-                            ? 'filtro não está ativado'
-                            : 'limpar filtro',
-                        onPressed: _clearFilter,
-                        icon: Icon(Icons.cancel_outlined,
-                            color: (_selectedDate == null)
-                                ? Colors.black54
-                                : Colors.red),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    width: 500,
-                    height: 500,
-                    child: TextField(
-                      textDirection: TextDirection.ltr,
-                      onChanged: _observacaoFilter,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Row(
+                  children: [
+                    ElevatedButton(
+                      onPressed: _show,
+                      child: const Text('data'),
                     ),
+                    IconButton(
+                      tooltip: (_selectedDate == null)
+                          ? 'filtro não está ativo'
+                          : 'limpar filtro',
+                      onPressed: _clearFilter,
+                      icon: Icon(Icons.cancel_outlined,
+                          color: (_selectedDate == null)
+                              ? Colors.black54
+                              : Colors.red),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  child: TextField(
+                    decoration:
+                        const InputDecoration(labelText: 'pesquisar por nome'),
+                    textDirection: TextDirection.ltr,
+                    onChanged: _observacaoFilter,
                   ),
-                  SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: DropdownButton(
+                ),
+                Row(
+                  children: [
+                    DropdownButton(
                       value: _valueDropdown,
                       items: categorias.map((e) {
                         return DropdownMenuItem(
@@ -237,12 +237,19 @@ class _MyHomePageState extends State<MyHomePage> {
                         });
                       },
                     ),
-                  ),
-                  IconButton(
+                    IconButton(
+                      tooltip: (_valueDropdown == null)
+                          ? 'filtro não está ativo'
+                          : 'limpar filtro',
                       onPressed: _clearCategoriaFilter,
-                      icon: const Icon(Icons.ac_unit_rounded))
-                ],
-              ),
+                      icon: Icon(Icons.cancel_outlined,
+                          color: (_valueDropdown == null)
+                              ? Colors.black54
+                              : Colors.red),
+                    )
+                  ],
+                ),
+              ],
             ),
           ],
         ),
