@@ -133,6 +133,10 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  void addOrcamento(int? catID, Map? orc) {
+    return print('a');
+  }
+
   void _observacaoFilter(String valor) {
     setState(() {
       _stringObservacao = valor;
@@ -152,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const NavBar(),
+      drawer: NavBar(addOrcamento),
       appBar: AppBar(
         title: const Text('My expenses app'),
       ),
@@ -167,8 +171,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 var data = _selectedDate ??
                     DateTimeRange(start: DateTime.now(), end: DateTime.now());
                 var categoria = _valueDropdown ?? '';
-
-                print(data);
 
                 lancamentos = box.values
                     .toList()

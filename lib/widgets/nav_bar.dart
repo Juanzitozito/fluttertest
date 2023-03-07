@@ -4,7 +4,9 @@ import 'package:fluttertest/pages/consultas.dart';
 import 'package:fluttertest/pages/previsao_de_gastos.dart';
 
 class NavBar extends StatelessWidget {
-  const NavBar({super.key});
+  final Function addOrcamento;
+
+  const NavBar(this.addOrcamento, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +50,10 @@ class NavBar extends StatelessWidget {
           const Divider(),
           ListTile(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => PrevisaoDeGastos()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PrevisaoDeGastos(addOrcamento)));
             },
             leading: const Icon(
               Icons.add_box_outlined,

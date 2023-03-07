@@ -1,18 +1,22 @@
+import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertest/entity/categoria.dart';
 import 'package:hive_flutter/adapters.dart';
 
 class PrevisaoDeGastos extends StatefulWidget {
-  const PrevisaoDeGastos({super.key});
+  const PrevisaoDeGastos(this.addOrcamento, {super.key});
+
+  final Function addOrcamento;
 
   @override
   State<PrevisaoDeGastos> createState() => _PrevisaoDeGastosState();
 }
 
 class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
-  final cucu = TextEditingController();
+  final _valorOrcamento = TextEditingController();
 
-  String? _value;
+  int? _value;
+  DateTime? data;
   var box = Hive.box<Categoria>('categorias');
 
   @override
@@ -51,14 +55,14 @@ class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
                       child: TextField(
                         decoration: const InputDecoration(
                             labelText: 'valor estipulado'),
-                        controller: cucu,
+                        controller: _valorOrcamento,
                       ),
                     ),
                     DropdownButton(
                         value: _value,
                         items: box.values
                             .map((e) => DropdownMenuItem(
-                                  value: e.nome,
+                                  value: e.id,
                                   child: Text(e.nome),
                                 ))
                             .toList(),
@@ -67,8 +71,20 @@ class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
                             _value = v;
                           });
                         }),
+                    Container(
+                      height: 20,
+                      width: 100,
+                      child: DateTimeField(
+                          onDateSelected: (dt) {
+                            setState(() {
+                              data = dt;
+                            });
+                          },
+                          selectedDate: data ?? DateTime.now()),
+                    ),
                     ElevatedButton(
-                        onPressed: () {},
+                        onPressed: widget.addOrcamento(
+                            _value, {'valor': _valorOrcamento, 'data': data}),
                         child: const Text('Definir orçamento'))
                   ],
                 ),
