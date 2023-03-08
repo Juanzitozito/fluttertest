@@ -71,7 +71,7 @@ class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
                             _value = v;
                           });
                         }),
-                    Container(
+                    SizedBox(
                       height: 20,
                       width: 100,
                       child: DateTimeField(
@@ -83,8 +83,17 @@ class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
                           selectedDate: data ?? DateTime.now()),
                     ),
                     ElevatedButton(
-                        onPressed: widget.addOrcamento(
-                            _value, {'valor': _valorOrcamento, 'data': data}),
+                        onPressed: () {
+                          print(_value);
+                          print({
+                            'valor': double.parse(_valorOrcamento.text),
+                            'data': data
+                          });
+                          widget.addOrcamento(_value, {
+                            'valor': double.parse(_valorOrcamento.text),
+                            'data': data
+                          });
+                        },
                         child: const Text('Definir orçamento'))
                   ],
                 ),

@@ -68,6 +68,9 @@ class _MyHomePageState extends State<MyHomePage> {
   void _startAddLancamento(BuildContext ctx) {
     final opcoesCategoria = Boxes.getCategorias().values.toList();
 
+    print(opcoesCategoria[0].orcamento);
+    print(opcoesCategoria[1].orcamento);
+    print(opcoesCategoria[2].orcamento);
     showModalBottomSheet(
         context: ctx,
         builder: (_) {
@@ -133,8 +136,14 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  void addOrcamento(int? catID, Map? orc) {
-    return print('a');
+  void addOrcamento(int catID, Map orc) {
+    final box = Boxes.getCategorias();
+
+    var cat = box.values.where((e) => e.id == catID).toList();
+
+    cat[0].orcamento?.add(orc);
+
+    cat[0].save();
   }
 
   void _observacaoFilter(String valor) {
