@@ -19,7 +19,7 @@ class CategoriaAdapter extends TypeAdapter<Categoria> {
     return Categoria(
       id: fields[0] as int?,
       nome: fields[1] as String,
-      orcamento: (fields[4] as List?)
+      orcamento: (fields[9] as List?)
           ?.map((dynamic e) => (e as Map).cast<dynamic, dynamic>())
           .toList(),
     );
@@ -33,7 +33,7 @@ class CategoriaAdapter extends TypeAdapter<Categoria> {
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.nome)
-      ..writeByte(4)
+      ..writeByte(9)
       ..write(obj.orcamento);
   }
 

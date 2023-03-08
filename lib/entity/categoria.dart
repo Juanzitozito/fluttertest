@@ -10,7 +10,7 @@ class Categoria extends HiveObject {
   @HiveField(1)
   late String nome;
 
-  @HiveField(4)
+  @HiveField(9)
   late List<Map>? orcamento;
 
   Categoria({this.id, required this.nome, this.orcamento});

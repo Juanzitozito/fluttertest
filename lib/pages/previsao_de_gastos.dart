@@ -84,11 +84,6 @@ class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
                     ),
                     ElevatedButton(
                         onPressed: () {
-                          print(_value);
-                          print({
-                            'valor': double.parse(_valorOrcamento.text),
-                            'data': data
-                          });
                           widget.addOrcamento(_value, {
                             'valor': double.parse(_valorOrcamento.text),
                             'data': data

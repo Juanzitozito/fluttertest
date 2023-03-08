@@ -139,11 +139,20 @@ class _MyHomePageState extends State<MyHomePage> {
   void addOrcamento(int catID, Map orc) {
     final box = Boxes.getCategorias();
 
+    print(catID);
+    print(orc);
+
     var cat = box.values.where((e) => e.id == catID).toList();
 
-    cat[0].orcamento?.add(orc);
+    var catigo = cat[0];
 
-    cat[0].save();
+    catigo.orcamento ??= [];
+
+    catigo.orcamento?.add(orc);
+
+    catigo.save();
+
+    print(catigo.orcamento);
   }
 
   void _observacaoFilter(String valor) {
