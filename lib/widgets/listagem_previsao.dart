@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 
 class ListagemPrevisoes extends StatelessWidget {
-  const ListagemPrevisoes({super.key});
+  ListagemPrevisoes({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Column(
+      children: [],
+      /* SizedBox(
+              width: double.infinity,
+              child: Card(
+                elevation: 20,
+                child: Row(),
+              ),
+            ), */
+    );
   }
 }

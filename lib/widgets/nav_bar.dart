@@ -60,7 +60,7 @@ class NavBar extends StatelessWidget {
               color: Colors.blue,
             ),
             title: const Text(
-              'Consultas',
+              'Orçamento',
               style: TextStyle(
                 fontSize: 20,
               ),

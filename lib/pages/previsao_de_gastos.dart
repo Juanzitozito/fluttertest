@@ -1,6 +1,9 @@
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertest/boxes.dart';
 import 'package:fluttertest/entity/categoria.dart';
+import 'package:fluttertest/main.dart';
+import 'package:fluttertest/widgets/listagem_previsao.dart';
 import 'package:hive_flutter/adapters.dart';
 
 class PrevisaoDeGastos extends StatefulWidget {
@@ -94,6 +97,11 @@ class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
                 ),
               ),
             ),
+            ValueListenableBuilder<Box<Categoria>>(
+                valueListenable: Boxes.getCategorias().listenable(),
+                builder: (context, box, _) {
+                  return ListagemPrevisoes(/* box.values.toList() */);
+                }),
           ],
         ),
       ),
