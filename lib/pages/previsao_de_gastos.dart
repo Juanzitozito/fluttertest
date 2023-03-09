@@ -2,7 +2,6 @@ import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertest/boxes.dart';
 import 'package:fluttertest/entity/categoria.dart';
-import 'package:fluttertest/main.dart';
 import 'package:fluttertest/widgets/listagem_previsao.dart';
 import 'package:hive_flutter/adapters.dart';
 
@@ -21,6 +20,9 @@ class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
   int? _value;
   DateTime? data;
   var box = Hive.box<Categoria>('categorias');
+
+  @override
+  void initState() {}
 
   @override
   Widget build(BuildContext context) {
