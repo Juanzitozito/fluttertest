@@ -1,5 +1,6 @@
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertest/boxes.dart';
 import 'package:fluttertest/entity/categoria.dart';
 import 'package:fluttertest/widgets/listagem_previsao.dart';
@@ -79,20 +80,30 @@ class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
                     SizedBox(
                       height: 20,
                       width: 100,
-                      child: DateTimeField(
-                          onDateSelected: (dt) {
+                      child: ElevatedButton(
+                        onPressed: () {
+                          DatePicker.showDatePicker(context,
+                              showTitleActions: true,
+                              minTime: DateTime(2018, 3),
+                              maxTime: DateTime(2023, 12),
+                              onChanged: (date) {}, onConfirm: (date) {
                             setState(() {
-                              data = dt;
+                              data = date;
                             });
                           },
-                          selectedDate: data ?? DateTime.now()),
+                              currentTime: DateTime.now(),
+                              locale: LocaleType.pt);
+                        },
+                        child: const Text('vamo pra sima gremio'),
+                      ),
                     ),
+                    (data != null)
+                        ? Text(data.toString())
+                        : const Text('foase'),
                     ElevatedButton(
                         onPressed: () {
-                          widget.addOrcamento(_value, {
-                            'valor': double.parse(_valorOrcamento.text),
-                            'data': data
-                          });
+                          widget.addOrcamento(
+                              _value, double.parse(_valorOrcamento.text), data);
                         },
                         child: const Text('Definir orçamento'))
                   ],

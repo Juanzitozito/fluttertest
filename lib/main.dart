@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertest/boxes.dart';
 import 'package:fluttertest/entity/categoria.dart';
 import 'package:fluttertest/entity/lancamento.dart';
+import 'package:fluttertest/entity/orcamento.dart';
 import 'package:fluttertest/widgets/lista_lancamento.dart';
 import 'package:fluttertest/widgets/nav_bar.dart';
 import 'package:fluttertest/widgets/new_lancamento.dart';
@@ -17,9 +18,11 @@ void main(List<String> args) async {
 
   Hive.registerAdapter(CategoriaAdapter());
   Hive.registerAdapter(LancamentoAdapter());
+  Hive.registerAdapter(OrcamentoAdapter());
 
   var categoriasBox = await Hive.openBox<Categoria>('categorias');
   var lancamentosBox = await Hive.openBox<Lancamento>('lancamentos');
+  var orcamentosBox = await Hive.openBox<Orcamento>('orcamentos');
 
   return runApp(
     const ProviderScope(
@@ -67,6 +70,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _startAddLancamento(BuildContext ctx) {
     final opcoesCategoria = Boxes.getCategorias().values.toList();
+
+    final teste = Boxes.getOrcamentos().values.toList();
 
     print(opcoesCategoria[0].orcamento);
     print(opcoesCategoria[1].orcamento);
@@ -136,23 +141,27 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  void addOrcamento(int catID, Map orc) {
-    final box = Boxes.getCategorias();
+  void addOrcamento(
+    int catID,
+    double valor,
+    DateTime data,
+  ) {
+    final box = Boxes.getOrcamentos();
 
     print(catID);
-    print(orc);
+    print(valor);
+    print(data);
+
+    final newOrc = Orcamento(
+        id: Random().nextInt(999999999),
+        idCategoria: catID,
+        valorPrevisao: valor,
+        dataPrevisao: data);
+
+    box.add(newOrc);
+    box.values.map((e) => print(e));
 
     var cat = box.values.where((e) => e.id == catID).toList();
-
-    var catigo = cat[0];
-
-    catigo.orcamento ??= [];
-
-    catigo.orcamento?.add(orc);
-
-    catigo.save();
-
-    print(catigo.orcamento);
   }
 
   void _observacaoFilter(String valor) {
