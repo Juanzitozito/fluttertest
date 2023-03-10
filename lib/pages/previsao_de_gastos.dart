@@ -1,8 +1,8 @@
-import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertest/boxes.dart';
 import 'package:fluttertest/entity/categoria.dart';
+import 'package:fluttertest/entity/orcamento.dart';
 import 'package:fluttertest/widgets/listagem_previsao.dart';
 import 'package:hive_flutter/adapters.dart';
 
@@ -21,6 +21,7 @@ class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
   int? _value;
   DateTime? data;
   var box = Hive.box<Categoria>('categorias');
+  var trueBox = Hive.box<Orcamento>('orcamentos');
 
   @override
   void initState() {}
@@ -97,9 +98,7 @@ class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
                         child: const Text('vamo pra sima gremio'),
                       ),
                     ),
-                    (data != null)
-                        ? Text(data.toString())
-                        : const Text('foase'),
+                    (data != null) ? Text(data.toString()) : const Text('aaa'),
                     ElevatedButton(
                         onPressed: () {
                           widget.addOrcamento(
@@ -110,10 +109,10 @@ class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
                 ),
               ),
             ),
-            ValueListenableBuilder<Box<Categoria>>(
-                valueListenable: Boxes.getCategorias().listenable(),
+            ValueListenableBuilder<Box<Orcamento>>(
+                valueListenable: Boxes.getOrcamentos().listenable(),
                 builder: (context, box, _) {
-                  return ListagemPrevisoes(/* box.values.toList() */);
+                  return ListagemPrevisoes(box.values.toList());
                 }),
           ],
         ),
