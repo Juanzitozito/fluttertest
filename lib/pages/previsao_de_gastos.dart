@@ -24,9 +24,6 @@ class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
   var trueBox = Hive.box<Orcamento>('orcamentos');
 
   @override
-  void initState() {}
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -44,18 +41,6 @@ class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    // When those voices deep within,
-                    // bring you down to your knees again,
-                    // redemption calls onto,
-                    // all of those who persist with the strength of the few.
-                    // Don't come to question all that you've known,
-                    // remember you are not alone,
-                    // I will be here,
-                    // standing beside you.
-                    // There is no mountain too tall to overcome,
-                    // we will be as one,
-                    // you will rise again,
-                    // this is your legacy.
                     SizedBox(
                       width: 200,
                       height: 100,

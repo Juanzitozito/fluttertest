@@ -148,10 +148,6 @@ class _MyHomePageState extends State<MyHomePage> {
   ) {
     final box = Boxes.getOrcamentos();
 
-    print(catID);
-    print(valor);
-    print(data);
-
     final newOrc = Orcamento(
         id: Random().nextInt(999999999),
         idCategoria: catID,

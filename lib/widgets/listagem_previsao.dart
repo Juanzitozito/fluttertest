@@ -8,14 +8,15 @@ class ListagemPrevisoes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: orcamentos.map((e) => Text(e.toString())).toList(),
-      /* SizedBox(
-              width: double.infinity,
-              child: Card(
-                elevation: 20,
-                child: Row(),
-              ),
-            ), */
+      children: orcamentos.map((e) {
+        return SizedBox(
+          width: double.infinity,
+          child: Card(
+            elevation: 20,
+            child: Row(),
+          ),
+        );
+      }).toList(),
     );
   }
 }
