@@ -3,6 +3,8 @@ import 'package:fluttertest/pages/categorias.dart';
 import 'package:fluttertest/pages/consultas.dart';
 import 'package:fluttertest/pages/previsao_de_gastos.dart';
 
+import '../pages/consultas_orcamento.dart';
+
 class NavBar extends StatelessWidget {
   final Function addOrcamento;
 
@@ -61,6 +63,25 @@ class NavBar extends StatelessWidget {
             ),
             title: const Text(
               'Orçamento',
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
+          ),
+          const Divider(),
+          ListTile(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ConsultasOrcamento()));
+            },
+            leading: const Icon(
+              Icons.add_box_outlined,
+              color: Colors.blue,
+            ),
+            title: const Text(
+              'Consultas Orçamento',
               style: TextStyle(
                 fontSize: 20,
               ),
