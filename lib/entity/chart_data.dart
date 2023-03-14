@@ -3,10 +3,7 @@ class ChartData {
 
   String categoria;
 
-  double? previsao;
+  double? valor;
 
-  double? gasto;
-
-  ChartData(
-      {required this.id, required this.categoria, this.previsao, this.gasto});
+  ChartData({required this.id, required this.categoria, this.valor});
 }
