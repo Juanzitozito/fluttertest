@@ -16,7 +16,7 @@ class ConsultasOrcamento extends StatelessWidget {
       body: SizedBox(
         width: double.infinity,
         height: double.infinity,
-        child: /* OrcamentoChart(month) */ Container(),
+        child: OrcamentoChart(month),
       ),
     );
   }
