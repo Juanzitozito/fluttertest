@@ -16,6 +16,7 @@ class OrcamentoChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final graphvalues = <ChartData>[];
+    final graphorcamento = <ChartData>[];
     final values = categorias.map((e) {
       final previsaocat = orcamentos.where((e1) => e.id == e1.idCategoria);
       double totallancamentos = 0;
@@ -30,13 +31,15 @@ class OrcamentoChart extends StatelessWidget {
           categoria: e.nome,
           valor: totallancamentos));
 
-      graphvalues.add(ChartData(
+      graphorcamento.add(ChartData(
           id: Random().nextInt(999999999),
           categoria: e.nome,
           valor: previsaocat.first.valorPrevisao));
 
-      return graphvalues;
+      return [graphvalues, graphorcamento];
     }).toList();
+
+    print(values);
 
 /*     values.forEach((element) {
       print(element.id);
@@ -48,15 +51,15 @@ class OrcamentoChart extends StatelessWidget {
     final series = [
       charts.Series<ChartData, String>(
         id: 'Chart',
-        data: values[0],
-        domainFn: (ChartData datum, index) => datum.categoria,
-        measureFn: (ChartData datum, index) => datum.valor,
+        data: values[0][0],
+        domainFn: (datum, index) => datum.categoria,
+        measureFn: (datum, index) => datum.valor,
       ),
       charts.Series<ChartData, String>(
         id: 'Chart',
-        data: values[1],
-        domainFn: (ChartData datum, index) => datum.categoria,
-        measureFn: (ChartData datum, index) => datum.valor,
+        data: values[0][1],
+        domainFn: (datum, index) => datum.categoria,
+        measureFn: (datum, index) => datum.valor,
       ),
     ];
 
