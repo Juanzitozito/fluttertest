@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertest/boxes.dart';
 import 'package:fluttertest/entity/orcamento.dart';
+import 'package:intl/intl.dart';
 
 class ListagemPrevisoes extends StatelessWidget {
   final List<Orcamento> orcamentos;
@@ -18,10 +19,19 @@ class ListagemPrevisoes extends StatelessWidget {
             elevation: 20,
             child: Row(
               children: [
-                Text(
-                    'limite: ${e.valorPrevisao.toStringAsFixed(2)}, ${categoria.first.nome}, ${e.dataPrevisao.toString()}'),
                 Container(
-                  child: Text(e.valorPrevisao.toStringAsFixed(2)),
+                  padding: const EdgeInsets.all(5),
+                  margin: const EdgeInsets.all(5),
+                  color: Colors.blue,
+                  child: Text(
+                    e.valorPrevisao.toStringAsFixed(2),
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+                Text(
+                  '${categoria.first.nome}, ${DateFormat.yM('pt').format(e.dataPrevisao).toString()}',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w600, fontSize: 17),
                 )
               ],
             ),
