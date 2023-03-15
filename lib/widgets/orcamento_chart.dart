@@ -39,15 +39,6 @@ class OrcamentoChart extends StatelessWidget {
       return [graphvalues, graphorcamento];
     }).toList();
 
-    print(values);
-
-/*     values.forEach((element) {
-      print(element.id);
-      print(element.gasto);
-      print(element.categoria);
-      print(element.previsao);
-    }); */
-
     final series = [
       charts.Series<ChartData, String>(
         id: 'Chart',

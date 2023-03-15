@@ -29,6 +29,17 @@ class _NewLancamentoState extends State<NewLancamento> {
   String? _value;
 
   @override
+  void initState() {
+    valorController.text = widget.editingElement?.valor.toString() ?? '';
+    _value = widget.editingElement?.categoria ?? '';
+    emissaoController.text = widget.editingElement?.emissao.toString() ?? '';
+    observacaoController.text =
+        widget.editingElement?.observacao.toString() ?? '';
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 5,
@@ -62,7 +73,7 @@ class _NewLancamentoState extends State<NewLancamento> {
                 onDateSelected: (date) {
                   emissaoController.text = date.toString();
                 },
-                selectedDate: DateTime.now()),
+                selectedDate: DateTime.parse(emissaoController.text)),
             ElevatedButton(
                 onPressed: () {
                   (widget.editingElement != null)

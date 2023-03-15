@@ -127,6 +127,7 @@ class _ListaLancamentosState extends State<ListaLancamentos> {
         Text(
             'Total de ${widget.lancamentos.length} registros, resultando em um total de  R\$${contador.toString()}'),
         IconButton(
+            tooltip: 'exportar em csv',
             onPressed: (() async {
               await csv(listaCsv);
             }),

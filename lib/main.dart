@@ -10,6 +10,8 @@ import 'package:fluttertest/widgets/lista_lancamento.dart';
 import 'package:fluttertest/widgets/nav_bar.dart';
 import 'package:fluttertest/widgets/new_lancamento.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:month_year_picker/month_year_picker.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,6 +43,11 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       title: 'Expenses',
       home: MyHomePage(),
+      localizationsDelegates: [
+        GlobalWidgetsLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        MonthYearPickerLocalizations.delegate,
+      ],
     );
   }
 }
@@ -186,36 +193,6 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            ValueListenableBuilder<Box<Lancamento>>(
-              valueListenable: Boxes.getLancamentos().listenable(),
-              builder: (content, box, _) {
-                var lancamentos = box.values.toList().cast<Lancamento>();
-                var observacao = _stringObservacao ?? '';
-                var data = _selectedDate ??
-                    DateTimeRange(start: DateTime.now(), end: DateTime.now());
-                var categoria = _valueDropdown ?? '';
-
-                lancamentos = box.values
-                    .toList()
-                    .cast<Lancamento>()
-                    .where((e) {
-                      return (_selectedDate != null)
-                          ? e.emissao.isAfter(data.start) &&
-                              e.emissao.isBefore(data.end)
-                          : e.emissao.difference(data.end).inDays <= 10;
-                    })
-                    .where((e) => e.observacao
-                        .toLowerCase()
-                        .contains(observacao.toLowerCase()))
-                    .where((e) => e.categoria
-                        .toLowerCase()
-                        .contains(categoria.toLowerCase()))
-                    .toList();
-
-                return ListaLancamentos(
-                    lancamentos, _deleteLancamento, _startEditLancamento);
-              },
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -275,6 +252,36 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ],
+            ),
+            ValueListenableBuilder<Box<Lancamento>>(
+              valueListenable: Boxes.getLancamentos().listenable(),
+              builder: (content, box, _) {
+                var lancamentos = box.values.toList().cast<Lancamento>();
+                var observacao = _stringObservacao ?? '';
+                var data = _selectedDate ??
+                    DateTimeRange(start: DateTime.now(), end: DateTime.now());
+                var categoria = _valueDropdown ?? '';
+
+                lancamentos = box.values
+                    .toList()
+                    .cast<Lancamento>()
+                    .where((e) {
+                      return (_selectedDate != null)
+                          ? e.emissao.isAfter(data.start) &&
+                              e.emissao.isBefore(data.end)
+                          : e.emissao.difference(data.end).inDays <= 10;
+                    })
+                    .where((e) => e.observacao
+                        .toLowerCase()
+                        .contains(observacao.toLowerCase()))
+                    .where((e) => e.categoria
+                        .toLowerCase()
+                        .contains(categoria.toLowerCase()))
+                    .toList();
+
+                return ListaLancamentos(
+                    lancamentos, _deleteLancamento, _startEditLancamento);
+              },
             ),
           ],
         ),

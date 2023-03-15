@@ -20,6 +20,9 @@ class ListagemPrevisoes extends StatelessWidget {
               children: [
                 Text(
                     'limite: ${e.valorPrevisao.toStringAsFixed(2)}, ${categoria.first.nome}, ${e.dataPrevisao.toString()}'),
+                Container(
+                  child: Text(e.valorPrevisao.toStringAsFixed(2)),
+                )
               ],
             ),
           ),
