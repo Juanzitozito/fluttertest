@@ -51,16 +51,16 @@ class _ResponsiveRowBuilder {
       _addListWidget(container, containerProportion);
     }
     rows.add(Row(
-      children: parts,
       crossAxisAlignment: CrossAxisAlignment.start,
+      children: parts,
     ));
     return rows;
   }
 
   void newLine() {
     rows.add(Row(
-      children: parts,
       crossAxisAlignment: CrossAxisAlignment.start,
+      children: parts,
     ));
     cols = 0;
     parts = [];
@@ -76,8 +76,8 @@ class _ResponsiveRowBuilder {
   ) {
     double colSize = _getWidth() / proportion;
     parts.add(SizedBox(
-      child: container,
       width: colSize * containerProportion,
+      child: container,
     ));
     cols += containerProportion;
   }

@@ -31,9 +31,9 @@ class _CategoriasState extends State<Categorias> {
         });
   }
 
-  _startEditCategoria(Categoria categoria) {}
+  /* _startEditCategoria(Categoria categoria) {}
 
-  _editCategoria(Categoria categoria) {}
+  _editCategoria(Categoria categoria) {} */
 
   void deleteCategoria(Categoria categoria) {
     categoria.delete();

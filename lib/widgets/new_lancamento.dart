@@ -44,7 +44,6 @@ class _NewLancamentoState extends State<NewLancamento> {
 
   @override
   Widget build(BuildContext context) {
-    print(_value);
     return Card(
       elevation: 5,
       child: Container(

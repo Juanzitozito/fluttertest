@@ -15,8 +15,8 @@ class OrcamentoChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final graphvalues = <ChartData>[];
-    final graphorcamento = <ChartData>[];
+    final graphvalues = <ChartData?>[];
+    final graphorcamento = <ChartData?>[];
     final values = categorias.map((e) {
       final previsaocat = orcamentos.where((e1) =>
           e.id == e1.idCategoria && e1.dataPrevisao.month == month.month);
@@ -27,39 +27,59 @@ class OrcamentoChart extends StatelessWidget {
         }
       }
 
-      print(previsaocat);
+      if (previsaocat.isEmpty) {
+        return [];
+      } else {
+        graphvalues.add(ChartData(
+            id: Random().nextInt(999999999),
+            categoria: e.nome,
+            valor: totallancamentos));
 
-      graphvalues.add(ChartData(
-          id: Random().nextInt(999999999),
-          categoria: e.nome,
-          valor: totallancamentos));
+        graphorcamento.add(ChartData(
+            id: Random().nextInt(999999999),
+            categoria: e.nome,
+            valor: previsaocat.first.valorPrevisao));
 
-      graphorcamento.add(ChartData(
-          id: Random().nextInt(999999999),
-          categoria: e.nome,
-          valor: previsaocat.first.valorPrevisao));
-
-      return [graphvalues, graphorcamento];
+        return [graphvalues, graphorcamento];
+      }
     }).toList();
 
     final series = [
-      charts.Series<ChartData, String>(
+      charts.Series<ChartData?, String>(
         id: 'Chart',
-        data: values[0][0],
-        domainFn: (datum, index) => datum.categoria,
-        measureFn: (datum, index) => datum.valor,
+        data: (values[0].isEmpty) ? [] : values[0][0],
+        domainFn: (datum, index) => datum!.categoria,
+        measureFn: (datum, index) => datum?.valor,
       ),
-      charts.Series<ChartData, String>(
+      charts.Series<ChartData?, String>(
         id: 'Chart',
-        data: values[0][1],
-        domainFn: (datum, index) => datum.categoria,
-        measureFn: (datum, index) => datum.valor,
+        data: (values[0].isEmpty) ? [] : values[0][1],
+        domainFn: (datum, index) => datum!.categoria,
+        measureFn: (datum, index) => datum?.valor,
       ),
     ];
 
-    return charts.BarChart(
-      series,
-      animate: true,
-    );
+    if (values[0].isEmpty) {
+      return Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        alignment: Alignment.center,
+        child: Card(
+          elevation: 15,
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            child: const Text(
+              'Sem Dados!',
+              style: TextStyle(fontSize: 40),
+            ),
+          ),
+        ),
+      );
+    } else {
+      return charts.BarChart(
+        series,
+        animate: true,
+      );
+    }
   }
 }

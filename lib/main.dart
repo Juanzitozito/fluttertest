@@ -11,6 +11,7 @@ import 'package:fluttertest/widgets/nav_bar.dart';
 import 'package:fluttertest/widgets/new_lancamento.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:month_year_picker/month_year_picker.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main(List<String> args) async {
@@ -78,11 +79,6 @@ class _MyHomePageState extends State<MyHomePage> {
   void _startAddLancamento(BuildContext ctx) {
     final opcoesCategoria = Boxes.getCategorias().values.toList();
 
-    final teste = Boxes.getOrcamentos().values.toList();
-
-    print(opcoesCategoria[0].orcamento);
-    print(opcoesCategoria[1].orcamento);
-    print(opcoesCategoria[2].orcamento);
     showModalBottomSheet(
         context: ctx,
         builder: (_) {
@@ -140,7 +136,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
     if (result != null) {
       setState(() {
-        print(result);
         _selectedDate = result;
       });
     } else {
@@ -162,7 +157,6 @@ class _MyHomePageState extends State<MyHomePage> {
         dataPrevisao: data);
 
     box.add(newOrc);
-    box.values.map((e) => print(e));
 
     var cat = box.values.where((e) => e.id == catID).toList();
   }

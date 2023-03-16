@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertest/boxes.dart';
 import 'package:fluttertest/entity/categoria.dart';
 import 'package:fluttertest/entity/orcamento.dart';
@@ -95,15 +94,18 @@ class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
                             });
                           }),
                       SizedBox(
-                        height: 20,
-                        width: 100,
-                        child: TextButton(
-                          onPressed: () =>
-                              _onPressed(context: context, locale: 'pt'),
-                          child: const Text('data'),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextButton(
+                              onPressed: () =>
+                                  _onPressed(context: context, locale: 'pt'),
+                              child: const Text('data'),
+                            ),
+                            Text(DateFormat().add_yM().format(data)),
+                          ],
                         ),
                       ),
-                      Text(DateFormat().add_yM().format(data)),
                       ElevatedButton(
                           onPressed: () {
                             widget.addOrcamento(_value,

@@ -74,7 +74,7 @@ class NavBar extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ConsultasOrcamento()));
+                      builder: (context) => const ConsultasOrcamento()));
             },
             leading: const Icon(
               Icons.add_box_outlined,

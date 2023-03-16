@@ -44,6 +44,7 @@ class ItensCategoria extends StatelessWidget {
                 IconButton(
                     onPressed: () {
                       listaCategorias.retainWhere((e) => e.id == id);
+                      // ignore: void_checks
                       return deleteCategoria(listaCategorias[0]);
                     },
                     icon: const Icon(Icons.delete)),
