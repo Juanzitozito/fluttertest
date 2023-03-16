@@ -22,7 +22,7 @@ class OrcamentoChart extends StatelessWidget {
           e.id == e1.idCategoria && e1.dataPrevisao.month == month.month);
       double totallancamentos = 0;
       for (var i in lancamentos) {
-        if (i.categoria == e.nome) {
+        if (i.categoria == e.nome && i.emissao.month == month.month) {
           totallancamentos += i.valor;
         }
       }

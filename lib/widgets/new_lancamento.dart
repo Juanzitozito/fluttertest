@@ -27,20 +27,24 @@ class _NewLancamentoState extends State<NewLancamento> {
   final emissaoController = TextEditingController();
 
   String? _value;
+  DateTime? _data = DateTime.now();
 
   @override
   void initState() {
-    valorController.text = widget.editingElement?.valor.toString() ?? '';
-    _value = widget.editingElement?.categoria ?? '';
-    emissaoController.text = widget.editingElement?.emissao.toString() ?? '';
-    observacaoController.text =
-        widget.editingElement?.observacao.toString() ?? '';
+    if (widget.editingElement != null) {
+      valorController.text = widget.editingElement?.valor.toString() ?? '';
+      _value = widget.editingElement?.categoria ?? '';
+      _data = widget.editingElement?.emissao ?? DateTime.now();
+      observacaoController.text =
+          widget.editingElement?.observacao.toString() ?? '';
+    }
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    print(_value);
     return Card(
       elevation: 5,
       child: Container(
@@ -71,9 +75,10 @@ class _NewLancamentoState extends State<NewLancamento> {
                 }),
             DateTimeField(
                 onDateSelected: (date) {
-                  emissaoController.text = date.toString();
+                  _data = date;
+                  setState(() {});
                 },
-                selectedDate: DateTime.parse(emissaoController.text)),
+                selectedDate: _data),
             ElevatedButton(
                 onPressed: () {
                   (widget.editingElement != null)
@@ -87,7 +92,7 @@ class _NewLancamentoState extends State<NewLancamento> {
                           observacaoController.text,
                           double.parse(valorController.text),
                           _value,
-                          emissaoController.text.toString());
+                          _data.toString());
                 },
                 child: const Text('adicionar'))
           ],

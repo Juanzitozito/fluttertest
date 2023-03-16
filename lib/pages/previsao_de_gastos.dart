@@ -59,67 +59,69 @@ class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
       appBar: AppBar(
         title: const Text('registro de previsões'),
       ),
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.9,
-              height: MediaQuery.of(context).size.height * 0.2,
-              child: Card(
-                elevation: 20,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox(
-                      width: 200,
-                      height: 100,
-                      child: TextField(
-                        decoration: const InputDecoration(
-                            labelText: 'valor estipulado'),
-                        controller: _valorOrcamento,
+      body: SingleChildScrollView(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.9,
+                height: MediaQuery.of(context).size.height * 0.2,
+                child: Card(
+                  elevation: 20,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SizedBox(
+                        width: 200,
+                        height: 100,
+                        child: TextField(
+                          decoration: const InputDecoration(
+                              labelText: 'valor estipulado'),
+                          controller: _valorOrcamento,
+                        ),
                       ),
-                    ),
-                    DropdownButton(
-                        value: _value,
-                        items: box.values
-                            .map((e) => DropdownMenuItem(
-                                  value: e.id,
-                                  child: Text(e.nome),
-                                ))
-                            .toList(),
-                        onChanged: (v) {
-                          setState(() {
-                            _value = v;
-                          });
-                        }),
-                    SizedBox(
-                      height: 20,
-                      width: 100,
-                      child: TextButton(
-                        onPressed: () =>
-                            _onPressed(context: context, locale: 'pt'),
-                        child: const Text('data'),
+                      DropdownButton(
+                          value: _value,
+                          items: box.values
+                              .map((e) => DropdownMenuItem(
+                                    value: e.id,
+                                    child: Text(e.nome),
+                                  ))
+                              .toList(),
+                          onChanged: (v) {
+                            setState(() {
+                              _value = v;
+                            });
+                          }),
+                      SizedBox(
+                        height: 20,
+                        width: 100,
+                        child: TextButton(
+                          onPressed: () =>
+                              _onPressed(context: context, locale: 'pt'),
+                          child: const Text('data'),
+                        ),
                       ),
-                    ),
-                    Text(DateFormat().add_yM().format(data)),
-                    ElevatedButton(
-                        onPressed: () {
-                          widget.addOrcamento(
-                              _value, double.parse(_valorOrcamento.text), data);
-                        },
-                        child: const Text('Definir orçamento'))
-                  ],
+                      Text(DateFormat().add_yM().format(data)),
+                      ElevatedButton(
+                          onPressed: () {
+                            widget.addOrcamento(_value,
+                                double.parse(_valorOrcamento.text), data);
+                          },
+                          child: const Text('Definir orçamento'))
+                    ],
+                  ),
                 ),
               ),
-            ),
-            ValueListenableBuilder<Box<Orcamento>>(
-                valueListenable: Boxes.getOrcamentos().listenable(),
-                builder: (context, box, _) {
-                  return ListagemPrevisoes(
-                      box.values.toList(), _deleteOrcamentos);
-                }),
-          ],
+              ValueListenableBuilder<Box<Orcamento>>(
+                  valueListenable: Boxes.getOrcamentos().listenable(),
+                  builder: (context, box, _) {
+                    return ListagemPrevisoes(
+                        box.values.toList(), _deleteOrcamentos);
+                  }),
+            ],
+          ),
         ),
       ),
     );
