@@ -72,8 +72,7 @@ class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       SizedBox(
-                        width: 200,
-                        height: 100,
+                        width: MediaQuery.of(context).size.width * 0.2,
                         child: TextField(
                           decoration: const InputDecoration(
                               labelText: 'valor estipulado'),
@@ -106,12 +105,15 @@ class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
                           ],
                         ),
                       ),
-                      ElevatedButton(
-                          onPressed: () {
-                            widget.addOrcamento(_value,
-                                double.parse(_valorOrcamento.text), data);
-                          },
-                          child: const Text('Definir orçamento'))
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.2,
+                        child: ElevatedButton(
+                            onPressed: () {
+                              widget.addOrcamento(_value,
+                                  double.parse(_valorOrcamento.text), data);
+                            },
+                            child: const Text('Definir orçamento')),
+                      )
                     ],
                   ),
                 ),
