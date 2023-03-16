@@ -48,22 +48,12 @@ class _ConsultasOrcamentoState extends State<ConsultasOrcamento> {
           children: [
             Card(
                 elevation: 10,
-                child: /* Container(
-                padding: const EdgeInsets.all(5),
-                width: MediaQuery.of(context).size.width * 0.5,
-                height: MediaQuery.of(context).size.height * 0.1,
-                child: DateTimeField(
-                    onDateSelected: (v) {
-                      _selected = v;
-                    },
-                    selectedDate: DateTime.now()),
-              ), */
-                    Column(
+                child: Column(
                   children: [
                     TextButton(
                       onPressed: () =>
                           _onPressed(context: context, locale: 'pt'),
-                      child: Text('Selecionar data'),
+                      child: const Text('Selecionar data'),
                     ),
                     Text(DateFormat().add_yM().format(_selected)),
                   ],

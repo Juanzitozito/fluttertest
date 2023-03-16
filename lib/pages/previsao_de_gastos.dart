@@ -5,6 +5,8 @@ import 'package:fluttertest/entity/categoria.dart';
 import 'package:fluttertest/entity/orcamento.dart';
 import 'package:fluttertest/widgets/listagem_previsao.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:intl/intl.dart';
+import 'package:month_year_picker/month_year_picker.dart';
 
 class PrevisaoDeGastos extends StatefulWidget {
   const PrevisaoDeGastos(this.addOrcamento, {super.key});
@@ -19,9 +21,37 @@ class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
   final _valorOrcamento = TextEditingController();
 
   int? _value;
-  DateTime? data;
+  DateTime data = DateTime.now();
   var box = Hive.box<Categoria>('categorias');
   var trueBox = Hive.box<Orcamento>('orcamentos');
+
+  void _deleteOrcamentos(id) {
+    var item = trueBox.values.where((e) => e.id == id);
+
+    item.first.delete();
+
+    setState(() {});
+  }
+
+  Future<void> _onPressed({
+    required BuildContext context,
+    String? locale,
+  }) async {
+    final localeObj = locale != null ? Locale(locale) : null;
+    final selected = await showMonthYearPicker(
+      context: context,
+      initialDate: data,
+      firstDate: DateTime(2019),
+      lastDate: DateTime(2024),
+      locale: localeObj,
+    );
+
+    if (selected != null) {
+      setState(() {
+        data = selected;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,24 +96,13 @@ class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
                     SizedBox(
                       height: 20,
                       width: 100,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          DatePicker.showDatePicker(context,
-                              showTitleActions: true,
-                              minTime: DateTime(2018, 3),
-                              maxTime: DateTime(2023, 12),
-                              onChanged: (date) {}, onConfirm: (date) {
-                            setState(() {
-                              data = date;
-                            });
-                          },
-                              currentTime: DateTime.now(),
-                              locale: LocaleType.pt);
-                        },
-                        child: const Text('vamo pra sima gremio'),
+                      child: TextButton(
+                        onPressed: () =>
+                            _onPressed(context: context, locale: 'pt'),
+                        child: const Text('data'),
                       ),
                     ),
-                    (data != null) ? Text(data.toString()) : const Text('aaa'),
+                    Text(DateFormat().add_yM().format(data)),
                     ElevatedButton(
                         onPressed: () {
                           widget.addOrcamento(
@@ -97,7 +116,8 @@ class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
             ValueListenableBuilder<Box<Orcamento>>(
                 valueListenable: Boxes.getOrcamentos().listenable(),
                 builder: (context, box, _) {
-                  return ListagemPrevisoes(box.values.toList());
+                  return ListagemPrevisoes(
+                      box.values.toList(), _deleteOrcamentos);
                 }),
           ],
         ),

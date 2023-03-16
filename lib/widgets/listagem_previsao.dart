@@ -6,7 +6,8 @@ import 'package:intl/intl.dart';
 class ListagemPrevisoes extends StatelessWidget {
   final List<Orcamento> orcamentos;
   final categorias = Boxes.getCategorias().values;
-  ListagemPrevisoes(this.orcamentos, {super.key});
+  final Function _del;
+  ListagemPrevisoes(this.orcamentos, this._del, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +33,10 @@ class ListagemPrevisoes extends StatelessWidget {
                   '${categoria.first.nome}, ${DateFormat.yM('pt').format(e.dataPrevisao).toString()}',
                   style: const TextStyle(
                       fontWeight: FontWeight.w600, fontSize: 17),
+                ),
+                IconButton(
+                  onPressed: () => _del(e.id),
+                  icon: const Icon(Icons.delete),
                 )
               ],
             ),

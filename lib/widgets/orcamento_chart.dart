@@ -18,13 +18,16 @@ class OrcamentoChart extends StatelessWidget {
     final graphvalues = <ChartData>[];
     final graphorcamento = <ChartData>[];
     final values = categorias.map((e) {
-      final previsaocat = orcamentos.where((e1) => e.id == e1.idCategoria);
+      final previsaocat = orcamentos.where((e1) =>
+          e.id == e1.idCategoria && e1.dataPrevisao.month == month.month);
       double totallancamentos = 0;
       for (var i in lancamentos) {
         if (i.categoria == e.nome) {
           totallancamentos += i.valor;
         }
       }
+
+      print(previsaocat);
 
       graphvalues.add(ChartData(
           id: Random().nextInt(999999999),
