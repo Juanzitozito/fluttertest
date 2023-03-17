@@ -19,7 +19,7 @@ class OrcamentoChart extends StatelessWidget {
     final graphorcamento = <ChartData?>[];
     final values = categorias.map((e) {
       final previsaocat = orcamentos.where((e1) =>
-          e.id == e1.idCategoria && e1.dataPrevisao.month == month.month);
+          e.nome == e1.valorPrevisao && e1.dataPrevisao.month == month.month);
       double totallancamentos = 0;
       for (var i in lancamentos) {
         if (i.categoria == e.nome && i.emissao.month == month.month) {
@@ -47,19 +47,19 @@ class OrcamentoChart extends StatelessWidget {
     final series = [
       charts.Series<ChartData?, String>(
         id: 'Chart',
-        data: (values[0].isEmpty) ? [] : values[0][0],
+        data: (values.isEmpty || values[0].isEmpty) ? [] : values[0][0],
         domainFn: (datum, index) => datum!.categoria,
         measureFn: (datum, index) => datum?.valor,
       ),
       charts.Series<ChartData?, String>(
         id: 'Chart',
-        data: (values[0].isEmpty) ? [] : values[0][1],
+        data: (values.isEmpty || values[0].isEmpty) ? [] : values[0][1],
         domainFn: (datum, index) => datum!.categoria,
         measureFn: (datum, index) => datum?.valor,
       ),
     ];
 
-    if (values[0].isEmpty) {
+    if (values.isEmpty || values[0].isEmpty) {
       return Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,

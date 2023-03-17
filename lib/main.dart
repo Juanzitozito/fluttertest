@@ -23,8 +23,11 @@ void main(List<String> args) async {
   Hive.registerAdapter(LancamentoAdapter());
   Hive.registerAdapter(OrcamentoAdapter());
 
+  // ignore: unused_local_variable
   var categoriasBox = await Hive.openBox<Categoria>('categorias');
+  // ignore: unused_local_variable
   var lancamentosBox = await Hive.openBox<Lancamento>('lancamentos');
+  // ignore: unused_local_variable
   var orcamentosBox = await Hive.openBox<Orcamento>('orcamentos');
 
   return runApp(
@@ -42,6 +45,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Expenses',
       home: MyHomePage(),
       localizationsDelegates: [
@@ -144,7 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void addOrcamento(
-    int catID,
+    String nomeCat,
     double valor,
     DateTime data,
   ) {
@@ -152,13 +156,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
     final newOrc = Orcamento(
         id: Random().nextInt(999999999),
-        idCategoria: catID,
+        categoria: nomeCat,
         valorPrevisao: valor,
         dataPrevisao: data);
 
     box.add(newOrc);
-
-    var cat = box.values.where((e) => e.id == catID).toList();
   }
 
   void _observacaoFilter(String valor) {
@@ -182,71 +184,88 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       drawer: NavBar(addOrcamento),
       appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () {
+                showModalBottomSheet(
+                    context: context,
+                    builder: (_) {
+                      return Container(
+                        padding: const EdgeInsets.only(bottom: 100),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            SizedBox(
+                              child: Row(
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: _show,
+                                    child: const Text('data'),
+                                  ),
+                                  IconButton(
+                                    tooltip: (_selectedDate == null)
+                                        ? 'filtro não está ativo'
+                                        : 'limpar filtro',
+                                    onPressed: _clearFilter,
+                                    icon: Icon(Icons.cancel_outlined,
+                                        color: (_selectedDate == null)
+                                            ? Colors.black54
+                                            : Colors.red),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.3,
+                              child: TextField(
+                                decoration:
+                                    const InputDecoration(labelText: 'nome'),
+                                textDirection: TextDirection.ltr,
+                                onChanged: _observacaoFilter,
+                              ),
+                            ),
+                            SizedBox(
+                              child: Row(
+                                children: [
+                                  DropdownButton(
+                                    value: _valueDropdown,
+                                    items: categorias.map((e) {
+                                      return DropdownMenuItem(
+                                        value: e.nome,
+                                        child: Text(e.nome),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _valueDropdown = value;
+                                      });
+                                    },
+                                  ),
+                                  IconButton(
+                                    tooltip: (_valueDropdown == null)
+                                        ? 'filtro não está ativo'
+                                        : 'limpar filtro',
+                                    onPressed: _clearCategoriaFilter,
+                                    icon: Icon(Icons.cancel_outlined,
+                                        color: (_valueDropdown == null)
+                                            ? Colors.black54
+                                            : Colors.red),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    });
+              },
+              icon: const Icon(Icons.search))
+        ],
         title: const Text('My expenses app'),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Row(
-                  children: [
-                    ElevatedButton(
-                      onPressed: _show,
-                      child: const Text('data'),
-                    ),
-                    IconButton(
-                      tooltip: (_selectedDate == null)
-                          ? 'filtro não está ativo'
-                          : 'limpar filtro',
-                      onPressed: _clearFilter,
-                      icon: Icon(Icons.cancel_outlined,
-                          color: (_selectedDate == null)
-                              ? Colors.black54
-                              : Colors.red),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.3,
-                  child: TextField(
-                    decoration:
-                        const InputDecoration(labelText: 'pesquisar por nome'),
-                    textDirection: TextDirection.ltr,
-                    onChanged: _observacaoFilter,
-                  ),
-                ),
-                Row(
-                  children: [
-                    DropdownButton(
-                      value: _valueDropdown,
-                      items: categorias.map((e) {
-                        return DropdownMenuItem(
-                          value: e.nome,
-                          child: Text(e.nome),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          _valueDropdown = value;
-                        });
-                      },
-                    ),
-                    IconButton(
-                      tooltip: (_valueDropdown == null)
-                          ? 'filtro não está ativo'
-                          : 'limpar filtro',
-                      onPressed: _clearCategoriaFilter,
-                      icon: Icon(Icons.cancel_outlined,
-                          color: (_valueDropdown == null)
-                              ? Colors.black54
-                              : Colors.red),
-                    )
-                  ],
-                ),
-              ],
-            ),
             ValueListenableBuilder<Box<Lancamento>>(
               valueListenable: Boxes.getLancamentos().listenable(),
               builder: (content, box, _) {

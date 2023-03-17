@@ -14,11 +14,11 @@ class Orcamento extends HiveObject {
   DateTime dataPrevisao;
 
   @HiveField(3)
-  int idCategoria;
+  String categoria;
 
   Orcamento(
       {required this.id,
       required this.valorPrevisao,
       required this.dataPrevisao,
-      required this.idCategoria});
+      required this.categoria});
 }

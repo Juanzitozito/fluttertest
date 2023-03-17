@@ -19,7 +19,7 @@ class PrevisaoDeGastos extends StatefulWidget {
 class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
   final _valorOrcamento = TextEditingController();
 
-  int? _value;
+  String? _value;
   DateTime data = DateTime.now();
   var box = Hive.box<Categoria>('categorias');
   var trueBox = Hive.box<Orcamento>('orcamentos');
@@ -83,7 +83,7 @@ class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
                           value: _value,
                           items: box.values
                               .map((e) => DropdownMenuItem(
-                                    value: e.id,
+                                    value: e.nome,
                                     child: Text(e.nome),
                                   ))
                               .toList(),

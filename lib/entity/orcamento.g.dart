@@ -20,7 +20,7 @@ class OrcamentoAdapter extends TypeAdapter<Orcamento> {
       id: fields[0] as int,
       valorPrevisao: fields[1] as double,
       dataPrevisao: fields[2] as DateTime,
-      idCategoria: fields[3] as int,
+      categoria: fields[3] as String,
     );
   }
 
@@ -35,7 +35,7 @@ class OrcamentoAdapter extends TypeAdapter<Orcamento> {
       ..writeByte(2)
       ..write(obj.dataPrevisao)
       ..writeByte(3)
-      ..write(obj.idCategoria);
+      ..write(obj.categoria);
   }
 
   @override

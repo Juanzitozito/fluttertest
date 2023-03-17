@@ -13,7 +13,8 @@ class ListagemPrevisoes extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: orcamentos.map((e) {
-        var categoria = categorias.where((e1) => e1.id == e.idCategoria);
+        var categoria = categorias
+            .where((e1) => e1.nome.toLowerCase() == e.categoria.toLowerCase());
         return SizedBox(
           width: double.infinity,
           child: Card(
@@ -30,7 +31,7 @@ class ListagemPrevisoes extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '${categoria.first.nome}, ${DateFormat.yM('pt').format(e.dataPrevisao).toString()}',
+                  '${(categoria.isEmpty) ? '(sem categoria)' : categoria.first.nome}, ${DateFormat.yM('pt').format(e.dataPrevisao).toString()}',
                   style: const TextStyle(
                       fontWeight: FontWeight.w600, fontSize: 17),
                 ),
