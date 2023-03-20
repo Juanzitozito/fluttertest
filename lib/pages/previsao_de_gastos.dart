@@ -17,12 +17,11 @@ class PrevisaoDeGastos extends StatefulWidget {
 }
 
 class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
-  final _valorOrcamento = TextEditingController();
-
   String? _value;
   DateTime data = DateTime.now();
   var box = Hive.box<Categoria>('categorias');
   var trueBox = Hive.box<Orcamento>('orcamentos');
+  double _valorOrcamento = 0;
 
   void _deleteOrcamentos(id) {
     var item = trueBox.values.where((e) => e.id == id);
@@ -76,7 +75,7 @@ class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
                         child: TextField(
                           decoration: const InputDecoration(
                               labelText: 'valor estipulado'),
-                          controller: _valorOrcamento,
+                          onChanged: (v) => _valorOrcamento = double.parse(v),
                         ),
                       ),
                       DropdownButton(
@@ -107,12 +106,17 @@ class _PrevisaoDeGastosState extends State<PrevisaoDeGastos> {
                       ),
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.2,
-                        child: ElevatedButton(
-                            onPressed: () {
-                              widget.addOrcamento(_value,
-                                  double.parse(_valorOrcamento.text), data);
-                            },
-                            child: const Text('Definir orçamento')),
+                        child: IconButton(
+                          onPressed: () {
+                            widget.addOrcamento(
+                                _value ?? '', _valorOrcamento, data);
+                          },
+                          icon: const Icon(
+                            Icons.add_box_outlined,
+                            color: Colors.blue,
+                            size: 40,
+                          ),
+                        ),
                       )
                     ],
                   ),

@@ -220,7 +220,6 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: TextField(
                                 decoration:
                                     const InputDecoration(labelText: 'nome'),
-                                textDirection: TextDirection.ltr,
                                 onChanged: _observacaoFilter,
                               ),
                             ),
@@ -300,8 +299,6 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color.fromARGB(255, 13, 83, 140),
-        hoverColor: const Color.fromARGB(255, 5, 59, 103),
         onPressed: () => _startAddLancamento(context),
         child: const Icon(Icons.add),
       ),

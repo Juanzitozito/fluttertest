@@ -20,7 +20,7 @@ class NewLancamento extends StatefulWidget {
 class _NewLancamentoState extends State<NewLancamento> {
   final observacaoController = TextEditingController();
 
-  final valorController = TextEditingController();
+  double _valorLancamento = 0;
 
   final categoriaController = TextEditingController();
 
@@ -32,7 +32,7 @@ class _NewLancamentoState extends State<NewLancamento> {
   @override
   void initState() {
     if (widget.editingElement != null) {
-      valorController.text = widget.editingElement?.valor.toString() ?? '';
+      _valorLancamento = widget.editingElement?.valor ?? 0;
       _value = widget.editingElement?.categoria ?? '';
       _data = widget.editingElement?.emissao ?? DateTime.now();
       observacaoController.text =
@@ -55,9 +55,12 @@ class _NewLancamentoState extends State<NewLancamento> {
               decoration: const InputDecoration(labelText: 'Observação'),
               controller: observacaoController,
             ),
-            TextField(
+            TextFormField(
               decoration: const InputDecoration(labelText: 'Valor'),
-              controller: valorController,
+              onChanged: (value) => _valorLancamento = double.parse(value),
+              initialValue: (widget.editingElement != null)
+                  ? widget.editingElement?.valor.toString()
+                  : '0',
             ),
             DropdownButton<String>(
                 value: _value,
@@ -84,14 +87,11 @@ class _NewLancamentoState extends State<NewLancamento> {
                       ? widget.addInput(
                           widget.editingElement,
                           observacaoController.text,
-                          double.parse(valorController.text),
+                          _valorLancamento,
                           _value,
                           emissaoController.text.toString())
-                      : widget.addInput(
-                          observacaoController.text,
-                          double.parse(valorController.text),
-                          _value,
-                          _data.toString());
+                      : widget.addInput(observacaoController.text,
+                          _valorLancamento, _value ?? '', _data.toString());
                 },
                 child: const Text('adicionar'))
           ],

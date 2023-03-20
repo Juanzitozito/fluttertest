@@ -36,6 +36,8 @@ class _ListaLancamentosState extends State<ListaLancamentos> {
     return file;
   }
 
+  final formatter = NumberFormat("#,##0.00", 'pt-BR');
+
   @override
   Widget build(BuildContext context) {
     final listaCsv = <List<String>>[];
@@ -67,12 +69,13 @@ class _ListaLancamentosState extends State<ListaLancamentos> {
                                   const BorderRadius.all(Radius.circular(20)),
                               border: Border.all(
                                 color: Colors.blue,
-                                width: 3,
+                                width: 2,
                               )),
-                          margin: const EdgeInsets.all(8.0),
-                          padding: const EdgeInsets.all(7),
+                          margin: const EdgeInsets.only(
+                              top: 8, bottom: 8, right: 3, left: 2),
+                          padding: const EdgeInsets.all(5),
                           child: Text(
-                            'R\$ ${e.valor.toStringAsFixed(2)}',
+                            'R\$ ${formatter.format(e.valor)}',
                             style: const TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.w700),
@@ -83,7 +86,7 @@ class _ListaLancamentosState extends State<ListaLancamentos> {
                           Text(
                             e.observacao,
                             style: const TextStyle(
-                                fontSize: 19, fontWeight: FontWeight.w600),
+                                fontSize: 17, fontWeight: FontWeight.w600),
                           ),
                           Text(
                               '${DateFormat('dd/MM/yyyy H').format(e.emissao)}h',
@@ -92,8 +95,8 @@ class _ListaLancamentosState extends State<ListaLancamentos> {
                         ],
                       ),
                       Container(
-                        padding: const EdgeInsets.all(8),
-                        margin: const EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.all(5),
+                        margin: const EdgeInsets.only(left: 3),
                         decoration: const BoxDecoration(
                             color: Color.fromARGB(255, 31, 133, 217),
                             borderRadius:
@@ -110,12 +113,10 @@ class _ListaLancamentosState extends State<ListaLancamentos> {
                             onPressed: () =>
                                 widget.startEditLancamentos(context, e.id),
                             icon: const Icon(Icons.edit),
-                            padding: const EdgeInsets.all(10),
                           ),
                           IconButton(
                             onPressed: () => widget.deleteLancamentos(e),
                             icon: const Icon(Icons.delete),
-                            padding: const EdgeInsets.all(10),
                           ),
                         ],
                       ),

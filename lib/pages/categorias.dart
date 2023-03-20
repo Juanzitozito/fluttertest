@@ -17,8 +17,8 @@ class Categorias extends StatefulWidget {
 class _CategoriasState extends State<Categorias> {
   void _addNewCategoria(String nome) {
     final newCat = Categoria(nome: nome, id: Random().nextInt(999999999));
-
     final box = Boxes.getCategorias();
+
     box.add(newCat);
     Navigator.pop(context);
   }
@@ -46,6 +46,7 @@ class _CategoriasState extends State<Categorias> {
         onPressed: () {
           _startAddCategoria(context);
         },
+        child: const Icon(Icons.add),
       ),
       appBar: AppBar(
         title: const Text('categorias'),

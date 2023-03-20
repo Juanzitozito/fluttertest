@@ -9,6 +9,8 @@ class ListagemPrevisoes extends StatelessWidget {
   final Function _del;
   ListagemPrevisoes(this.orcamentos, this._del, {super.key});
 
+  final formatter = NumberFormat("#,##0.00", 'pt-BR');
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -26,7 +28,7 @@ class ListagemPrevisoes extends StatelessWidget {
                   margin: const EdgeInsets.all(5),
                   color: Colors.blue,
                   child: Text(
-                    e.valorPrevisao.toStringAsFixed(2),
+                    formatter.format(e.valorPrevisao),
                     style: const TextStyle(color: Colors.white),
                   ),
                 ),
