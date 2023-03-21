@@ -114,10 +114,10 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
-  void _editLancamento(Lancamento lancamento, String observacao, double valor,
+  void _editLancamento(Lancamento lancamento, String observacao, double? valor,
       String categoria, String emissao) {
     lancamento.observacao = observacao;
-    lancamento.valor = valor;
+    lancamento.valor = valor ?? 0.0;
     lancamento.categoria = categoria;
     lancamento.emissao = DateTime.parse(emissao);
 

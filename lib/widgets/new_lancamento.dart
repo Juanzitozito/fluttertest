@@ -20,19 +20,16 @@ class NewLancamento extends StatefulWidget {
 class _NewLancamentoState extends State<NewLancamento> {
   final observacaoController = TextEditingController();
 
-  double _valorLancamento = 0;
-
   final categoriaController = TextEditingController();
 
-  final emissaoController = TextEditingController();
-
+  double? _valorLancamento;
   String? _value;
   DateTime? _data = DateTime.now();
 
   @override
   void initState() {
     if (widget.editingElement != null) {
-      _valorLancamento = widget.editingElement?.valor ?? 0;
+      _valorLancamento = widget.editingElement?.valor ?? 0.0;
       _value = widget.editingElement?.categoria ?? '';
       _data = widget.editingElement?.emissao ?? DateTime.now();
       observacaoController.text =
@@ -57,7 +54,7 @@ class _NewLancamentoState extends State<NewLancamento> {
             ),
             TextFormField(
               decoration: const InputDecoration(labelText: 'Valor'),
-              onChanged: (value) => _valorLancamento = double.parse(value),
+              onFieldSubmitted: (v) => _valorLancamento = double.parse(v),
               initialValue: (widget.editingElement != null)
                   ? widget.editingElement?.valor.toString()
                   : '0',
@@ -89,7 +86,7 @@ class _NewLancamentoState extends State<NewLancamento> {
                           observacaoController.text,
                           _valorLancamento,
                           _value,
-                          emissaoController.text.toString())
+                          _data.toString())
                       : widget.addInput(observacaoController.text,
                           _valorLancamento, _value ?? '', _data.toString());
                 },
