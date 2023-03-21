@@ -54,7 +54,7 @@ class _NewLancamentoState extends State<NewLancamento> {
             ),
             TextFormField(
               decoration: const InputDecoration(labelText: 'Valor'),
-              onFieldSubmitted: (v) => _valorLancamento = double.parse(v),
+              onChanged: (v) => _valorLancamento = double.parse(v),
               initialValue: (widget.editingElement != null)
                   ? widget.editingElement?.valor.toString()
                   : '0',

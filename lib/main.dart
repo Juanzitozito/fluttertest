@@ -66,10 +66,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   void _addNewLancamento(
-      String observacao, double valor, String categoria, String emissao) {
+      String observacao, double? valor, String categoria, String emissao) {
     final newLanc = Lancamento(
         emissao: DateTime.parse(emissao),
-        valor: valor,
+        valor: valor ?? 0.0,
         observacao: observacao,
         categoria: categoria,
         id: Random().nextInt(999999999));
@@ -114,10 +114,10 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
-  void _editLancamento(Lancamento lancamento, String observacao, double? valor,
+  void _editLancamento(Lancamento lancamento, String observacao, double valor,
       String categoria, String emissao) {
     lancamento.observacao = observacao;
-    lancamento.valor = valor ?? 0.0;
+    lancamento.valor = valor;
     lancamento.categoria = categoria;
     lancamento.emissao = DateTime.parse(emissao);
 
